@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Dojo Library
+Bundle-SymbolicName: org.part3rd.dojo;singleton:=true
+Bundle-Version: 1.7.2
+Bundle-Activator: org.part3rd.dojo.Activator
+Bundle-Vendor: EMRYS
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: javax.servlet;version="2.5.0";resolution:=optional,
+ javax.servlet.http;version="2.5.0";resolution:=optional,
+ javax.servlet.resources;version="2.5.0";resolution:=optional,
+ org.osgi.framework;version="1.3.0"
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.emrys.core.runtime.resources;bundle-version="1.0.0"
