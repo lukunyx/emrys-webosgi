@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Indigo Launcher Configurator
+Bundle-SymbolicName: org.emrys.launcher.configurator
+Bundle-Version: 1.0.0
+Bundle-Activator: org.emrys.launcher.configurator.Activator
+Bundle-Vendor: EMRYS
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: org.emrys.core.launcher.internal,
+ org.eclipse.osgi.framework.console;version="1.0.0";resolution:=optional,
+ org.eclipse.osgi.framework.internal.core,
+ org.eclipse.osgi.service.datalocation;version="1.0.0";resolution:=optional,
+ org.eclipse.osgi.service.resolver;version="1.2.0";resolution:=optional,
+ org.osgi.framework;version="1.3.0",
+ org.osgi.service.packageadmin;version="1.2.0",
+ org.osgi.service.startlevel;version="1.0.0",
+ org.osgi.util.tracker;version="1.3.0"
+Bundle-ActivationPolicy: lazy
