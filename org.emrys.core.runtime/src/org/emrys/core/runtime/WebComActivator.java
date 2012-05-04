@@ -404,7 +404,7 @@ public abstract class WebComActivator extends ComActivator implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.hirisun.components.web.core.IWebComponentActivator#getServiceNS()
+	 * com.EMRYS.components.web.core.IWebComponentActivator#getServiceNS()
 	 */
 	public final String getServiceNS() {
 		return bundleID;
@@ -414,7 +414,7 @@ public abstract class WebComActivator extends ComActivator implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.hirisun.components.web.core.IWebComponentActivator#getServiceNSPrefix
+	 * com.EMRYS.components.web.core.IWebComponentActivator#getServiceNSPrefix
 	 * ()
 	 */
 	public String getServiceNSPrefix() {
@@ -591,7 +591,7 @@ public abstract class WebComActivator extends ComActivator implements
 	 */
 	private void initJspConfigs(Document doc) {
 		/*
-		 * <jsp-config> <taglib> <taglib-uri>www.hirisun.com/jsptag</taglib-uri>
+		 * <jsp-config> <taglib> <taglib-uri>www.EMRYS.com/jsptag</taglib-uri>
 		 * <taglib-location>sagag.tlb</taglib-location> </taglib> </jsp-config>
 		 */
 		for (Iterator i = doc.getRootElement().elementIterator("jsp-config"); i

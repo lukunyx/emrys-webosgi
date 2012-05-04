@@ -161,7 +161,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":com.hirisun.components.web.core.fsvc.extension.IResourceVisitController"/>
+                  <meta.attribute kind="java" basedOn=":com.EMRYS.components.web.core.fsvc.extension.IResourceVisitController"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -183,7 +183,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":com.hirisun.components.web.core.fsvc.extension.IPublishedFileResolver"/>
+                  <meta.attribute kind="java" basedOn=":com.EMRYS.components.web.core.fsvc.extension.IPublishedFileResolver"/>
                </appinfo>
             </annotation>
          </attribute>

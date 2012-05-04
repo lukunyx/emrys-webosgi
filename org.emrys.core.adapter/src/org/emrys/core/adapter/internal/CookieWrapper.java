@@ -6,7 +6,7 @@ import javax.servlet.http.Cookie;
  * Wrapper the ICookie interface back to Cookie type. This class is used to receive the Cookie added
  * from wrappered ServletResponse from framework.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-6-1
  */
 public class CookieWrapper extends Cookie {

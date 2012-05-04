@@ -1,9 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2010 Hirisun Corporation.
+ * Copyright (c) 2010 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
- * http://www.hirisun.com/legal/epl-v10.html
+ * http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.core.runtime.jeewrappers;
 
@@ -35,7 +35,7 @@ import org.emrys.core.adapter.internal.ServletContextAdapter;
  * ServletContext. This wrapper let the init parameter can be modified in a
  * servletCtxAdapter.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2010-11-4
  */
 public class ServletContextWrapper implements ServletContext, IServletObjectWrapper {

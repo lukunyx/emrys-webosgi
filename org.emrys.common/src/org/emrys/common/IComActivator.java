@@ -1,7 +1,7 @@
 /*******************************************************************************
- * Copyright (c) 2010 Hirisun Corporation. All rights reserved. This program and the accompanying
- * materials are made available under the terms of the Hirisun License v1.0 which accompanies this
- * distribution, and is available at http://www.hirisun.com/legal/epl-v10.html
+ * Copyright (c) 2010 EMRYS Corporation. All rights reserved. This program and the accompanying
+ * materials are made available under the terms of the EMRYS License v1.0 which accompanies this
+ * distribution, and is available at http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.common;
 
@@ -15,7 +15,7 @@ import org.osgi.framework.BundleActivator;
 /**
  * The Component Activator provide some convenient interface.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2010-11-5
  */
 public interface IComActivator extends BundleActivator, LicenseConsumer {

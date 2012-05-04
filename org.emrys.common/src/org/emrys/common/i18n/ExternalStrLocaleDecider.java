@@ -1,7 +1,7 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
@@ -14,7 +14,7 @@ import java.util.Locale;
  * languages. Use international external String scope, we can define several scope the different
  * Locales can be use, like the back administrat page or front ui page of a web application.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-6-24
  */
 public interface ExternalStrLocaleDecider {

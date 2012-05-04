@@ -1,7 +1,7 @@
 /*******************************************************************************
- * Copyright (c) 2010 Hirisun Corporation. All rights reserved. This program and the accompanying
- * materials are made available under the terms of the Hirisun License v1.0 which accompanies this
- * distribution, and is available at http://www.hirisun.com/legal/epl-v10.html
+ * Copyright (c) 2010 EMRYS Corporation. All rights reserved. This program and the accompanying
+ * materials are made available under the terms of the EMRYS License v1.0 which accompanies this
+ * distribution, and is available at http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.core.runtime.resources.client;
 
@@ -24,7 +24,7 @@ import org.emrys.core.runtime.resources.IWebResConstants;
 /**
  * The file uplod Util methods.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2010-10-18
  */
 public class FileUploadUtil {

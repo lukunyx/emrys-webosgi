@@ -1,9 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
- * http://www.hirisun.com/legal/epl-v10.html
+ * http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.common;
 
@@ -17,7 +17,7 @@ import org.osgi.framework.FrameworkListener;
 /**
  * The Activator of Common Component.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2010-9-24
  */
 public class CommonActivator extends ComActivator {

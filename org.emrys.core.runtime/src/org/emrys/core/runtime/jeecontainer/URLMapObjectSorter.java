@@ -69,7 +69,7 @@ class URLMapObjectSorter<T extends AbstMultiInstUrlMapObject> {
 	 * regular as following: 1. exact map. 2. the longest map regular if
 	 * wildcard path map. 3. the extesion map
 	 * 
-	 * @author Leo Chang - Hirisun
+	 * @author Leo Chang - EMRYS
 	 * @version 2011-6-26
 	 * @param <T0>
 	 */

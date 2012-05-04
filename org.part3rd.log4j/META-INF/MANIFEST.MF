@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Log4j
 Bundle-SymbolicName: org.part3rd.log4j
 Bundle-Version: 1.2.14.qualifier
-Bundle-Vendor: Apache & HIRISUN
+Bundle-Vendor: Apache & EMRYS
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .,
  bin/,

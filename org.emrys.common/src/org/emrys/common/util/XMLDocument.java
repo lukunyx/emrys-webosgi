@@ -1,9 +1,9 @@
 package org.emrys.common.util;
 
 /*******************************************************************************
- * Copyright (c) 2010 Hirisun Corporation. All rights reserved. This program and the accompanying
- * materials are made available under the terms of the Hirisun License v1.0 which accompanies this
- * distribution, and is available at http://www.hirisun.com/legal/epl-v10.html
+ * Copyright (c) 2010 EMRYS Corporation. All rights reserved. This program and the accompanying
+ * materials are made available under the terms of the EMRYS License v1.0 which accompanies this
+ * distribution, and is available at http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 
 import java.io.ByteArrayInputStream;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 
 /**
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2010-8-6
  */
 public class XMLDocument {

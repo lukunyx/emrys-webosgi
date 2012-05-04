@@ -1,7 +1,7 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
@@ -31,7 +31,7 @@ import org.emrys.common.util.FileUtil;
 /**
  * The sigleton instanced License Manager for manage the licenses in the framework.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-6-14
  */
 public class LicenseManager {
@@ -260,7 +260,7 @@ public class LicenseManager {
 	/**
 	 * The default EPL license type
 	 * 
-	 * @author Leo Chang - Hirisun
+	 * @author Leo Chang - EMRYS
 	 * @version 2011-6-1
 	 */
 	public static class EPL implements License {

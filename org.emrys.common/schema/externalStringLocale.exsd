@@ -69,7 +69,7 @@
                   The decieder for the Locale of external string.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":com.hirisun.components.common.i18n.ExternalStrLocaleDecider"/>
+                  <meta.attribute kind="java" basedOn=":com.EMRYS.components.common.i18n.ExternalStrLocaleDecider"/>
                </appInfo>
             </annotation>
          </attribute>

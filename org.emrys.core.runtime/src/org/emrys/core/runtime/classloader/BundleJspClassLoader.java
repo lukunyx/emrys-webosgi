@@ -1,7 +1,7 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation. All rights reserved. This program and the accompanying
- * materials are made available under the terms of the Hirisun License v1.0 which accompanies this
- * distribution, and is available at http://www.hirisun.com/legal/epl-v10.html
+ * Copyright (c) 2011 EMRYS Corporation. All rights reserved. This program and the accompanying
+ * materials are made available under the terms of the EMRYS License v1.0 which accompanies this
+ * distribution, and is available at http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.core.runtime.classloader;
 
@@ -31,7 +31,7 @@ import org.osgi.framework.Constants;
  * simulate the class org.eclipse.equinox.internal.jsp.jasper.JspClassLoader to
  * implements the web bundle class loader.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-1-13
  */
 public class BundleJspClassLoader extends URLClassLoader {
