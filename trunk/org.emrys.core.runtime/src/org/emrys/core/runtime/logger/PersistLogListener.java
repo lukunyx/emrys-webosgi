@@ -1,7 +1,7 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
@@ -33,7 +33,7 @@ import org.osgi.service.log.LogService;
 /**
  * Store all logs of one day into a local file named with the time ot that day.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-6-27
  */
 public class PersistLogListener implements LogListener {

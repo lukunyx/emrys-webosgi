@@ -1,9 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
- * http://www.hirisun.com/legal/epl-v10.html
+ * http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.core.adapter.internal;
 
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  * 鍥犱负瑕佸仛鍒板吋瀹箂ervlet2.4鍜�5瑙勮寖锛�
  * 杩欓噷灏嗕粠鏈嶅姟鍣ㄤ紶閫掕繃鏉ョ殑ServletRequest鍋氶噸鏂扮殑灏佽锛岃�屾槸鐢ㄦ墍鏈夌殑鍙嶅皠鏂规硶璋冪敤涓や釜2.5瑙勮寖鏂板鐨勬柟娉曪紝姣斿getContextPath绛夈��
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-4-18
  */
 public class HttpServletRequestAdapter implements IServletObjectWrapper {

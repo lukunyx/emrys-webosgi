@@ -489,7 +489,7 @@ public final class FwkActivator extends ComActivator implements IFwkConstants,
 	/**
 	 * HttpServcie tracker
 	 * 
-	 * @author Leo Chang - Hirisun
+	 * @author Leo Chang - EMRYS
 	 * @version 2011-2-26
 	 */
 	public static class HttpServiceTracker extends ServiceTracker {

@@ -1,9 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
- * http://www.hirisun.com/legal/epl-v10.html
+ * http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.core.runtime.jeecontainer;
 
@@ -18,7 +18,7 @@ import org.emrys.core.runtime.jeewrappers.BundledHttpServletRequestWrapper;
  * 比如在调用到某个Web
  * Bundle中的Servlet、Listener、Filter时，霄1�7要替换当前线程上下文ClassLoader，则可以使用此类来封装调用的方法〄1�7
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-4-6
  */
 public abstract class BundleContextRunnable implements Runnable {

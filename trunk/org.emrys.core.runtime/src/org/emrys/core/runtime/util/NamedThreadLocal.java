@@ -6,7 +6,7 @@ import org.eclipse.core.runtime.Assert;
  * {@link ThreadLocal} subclass that exposes a specified name
  * as {@link #toString()} result (allowing for introspection).
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-6-2
  * @param <T>
  */

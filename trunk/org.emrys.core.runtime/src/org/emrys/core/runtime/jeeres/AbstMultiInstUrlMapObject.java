@@ -1,9 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
- * http://www.hirisun.com/legal/epl-v10.html
+ * http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.core.runtime.jeeres;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * The serlvet and filter's common interface which can be obtaining url pattern
  * to sort with or other process.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-7-2
  */
 public class AbstMultiInstUrlMapObject extends AbstractBundledServletObject {

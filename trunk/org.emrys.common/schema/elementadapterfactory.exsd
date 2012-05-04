@@ -69,7 +69,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":com.hirisun.components.common.model.IElementAdapter"/>
+                  <meta.attribute kind="java" basedOn=":com.EMRYS.components.common.model.IElementAdapter"/>
                </appInfo>
             </annotation>
          </attribute>

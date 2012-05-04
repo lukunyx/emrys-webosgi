@@ -1,11 +1,11 @@
 package org.emrys.core.adapter.internal;
 
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
- * http://www.hirisun.com/legal/epl-v10.html
+ * http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 为了将服务器的Servlet库版本与WebOSGi内部使用版本分离，这里对服务器传递过来的HttpServletResponse类型进行wrapper,实现类加载的隔离〄1�7
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-4-18
  */
 public class HttpServletResponseAdapter implements IServletObjectWrapper {

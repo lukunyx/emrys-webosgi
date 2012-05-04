@@ -1,9 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
- * http://www.hirisun.com/legal/epl-v10.html
+ * http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.core.runtime.jeecontainer;
 
@@ -48,7 +48,7 @@ import org.osgi.framework.Bundle;
  * original ServletContext delivered from external Server, and modified its some
  * behaviors like resource loading, request disptcher getting. etc.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-3-22
  */
 public class BundledServletContext implements IBundledServletContext {
@@ -191,7 +191,7 @@ public class BundledServletContext implements IBundledServletContext {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.hirisun.components.web.core.IBundledServletContext#getBundle()
+	 * @see com.EMRYS.components.web.core.IBundledServletContext#getBundle()
 	 */
 	public Bundle getBundle() {
 		return activator.getBundle();
@@ -561,7 +561,7 @@ public class BundledServletContext implements IBundledServletContext {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.hirisun.components.web.core.IBundledServletContext#getFilters()
+	 * @see com.EMRYS.components.web.core.IBundledServletContext#getFilters()
 	 */
 	public Collection<FilterDelegate> getFilters() {
 		if (filters == null)
@@ -572,7 +572,7 @@ public class BundledServletContext implements IBundledServletContext {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.hirisun.components.web.core.IBundledServletContext#getTaglibs()
+	 * @see com.EMRYS.components.web.core.IBundledServletContext#getTaglibs()
 	 */
 	public List<TaglibInfo> getTaglibs() {
 		if (taglibs == null)
@@ -584,7 +584,7 @@ public class BundledServletContext implements IBundledServletContext {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.hirisun.components.web.core.IBundledServletContext#getListeners()
+	 * com.EMRYS.components.web.core.IBundledServletContext#getListeners()
 	 */
 	public Collection<ListenerInfo> getListeners() {
 		if (listeners == null)
@@ -596,7 +596,7 @@ public class BundledServletContext implements IBundledServletContext {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.hirisun.components.web.core.IBundledServletContext#getServletsInfo()
+	 * com.EMRYS.components.web.core.IBundledServletContext#getServletsInfo()
 	 */
 	public Collection<ServletDelegate> getServletsInfo() {
 		if (servlets == null)
@@ -608,7 +608,7 @@ public class BundledServletContext implements IBundledServletContext {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.hirisun.components.web.core.IBundledServletContext#setWebRootFolder
+	 * com.EMRYS.components.web.core.IBundledServletContext#setWebRootFolder
 	 * (java.io.File)
 	 */
 	public void setWebRootFolder(IPath webContentRootPath) {
@@ -619,7 +619,7 @@ public class BundledServletContext implements IBundledServletContext {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.hirisun.components.web.core.IBundledServletContext#switchState(int)
+	 * com.EMRYS.components.web.core.IBundledServletContext#switchState(int)
 	 */
 	public void switchState(int state) {
 		switch (state) {
@@ -671,7 +671,7 @@ public class BundledServletContext implements IBundledServletContext {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.hirisun.components.web.core.IBundledServletContext#getErrorPages()
+	 * com.EMRYS.components.web.core.IBundledServletContext#getErrorPages()
 	 */
 	public Map<Integer, String> getErrorPages() {
 		if (errPages == null)
@@ -683,7 +683,7 @@ public class BundledServletContext implements IBundledServletContext {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.hirisun.components.web.core.IBundledServletContext#getWelcomePages()
+	 * com.EMRYS.components.web.core.IBundledServletContext#getWelcomePages()
 	 */
 	public List<String> getWelcomePages() {
 		if (welcomPages == null)

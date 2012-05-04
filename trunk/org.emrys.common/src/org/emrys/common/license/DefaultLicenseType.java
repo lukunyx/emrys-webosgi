@@ -1,9 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
- * http://www.hirisun.com/legal/epl-v10.html
+ * http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.common.license;
 
@@ -25,7 +25,7 @@ import javax.crypto.IllegalBlockSizeException;
 
 /**
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-6-14
  */
 public class DefaultLicenseType implements LicenseType {
@@ -119,7 +119,7 @@ public class DefaultLicenseType implements LicenseType {
 		attrs.put(ATTR_NAME_CREATE_TIME, new SimpleDateFormat(TIME_FORMATE).format(new Date()));
 		attrs.put(ATTR_NAME_VALID_TIME, "900");
 		attrs.put(ATTR_NAME_USER_NAME, "developer");
-		attrs.put(ATTR_NAME_USER_MAIL, "developer@hirisun.com");
+		attrs.put(ATTR_NAME_USER_MAIL, "developer@EMRYS.com");
 		String encryptLicense = new DefaultLicenseType(null).createNewLicense(attrs);
 		System.out.println("Internal created license:" + encryptLicense);
 		DesUtils des = new DesUtils(DES_ENCRYPTPWD);

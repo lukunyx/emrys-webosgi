@@ -179,7 +179,7 @@ public final class FwkRuntime implements IFwkRuntime {
 	 * (non-Javadoc)
 	 * 
 	 * @see org.emrys.common.IComponentCore#addBundleActivatorEntry(
-	 * java.lang.Long, com.hirisun.components.common.ComponentActivator)
+	 * java.lang.Long, com.EMRYS.components.common.ComponentActivator)
 	 */
 	public void addBundleActivatorEntry(Long bundleId,
 			ComActivator componentActivator) {

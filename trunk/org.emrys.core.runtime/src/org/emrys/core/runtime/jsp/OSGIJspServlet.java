@@ -1,7 +1,7 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation. All rights reserved. This program and the accompanying
- * materials are made available under the terms of the Hirisun License v1.0 which accompanies this
- * distribution, and is available at http://www.hirisun.com/legal/epl-v10.html
+ * Copyright (c) 2011 EMRYS Corporation. All rights reserved. This program and the accompanying
+ * materials are made available under the terms of the EMRYS License v1.0 which accompanies this
+ * distribution, and is available at http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.core.runtime.jsp;
 
@@ -31,7 +31,7 @@ import org.osgi.framework.Bundle;
  * OSGi Jsp Serlvet to compile a .jsp file and execute the compiled .class. This
  * servlet benefite from {@link org.apache.jasper.servlet.JspServlet}.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-1-12
  */
 public class OSGIJspServlet extends HttpServlet {
@@ -135,7 +135,7 @@ public class OSGIJspServlet extends HttpServlet {
 	/**
 	 * ServletContext's Adapter, this class delegate a given ServletContext.
 	 * 
-	 * @author Leo Chang - Hirisun
+	 * @author Leo Chang - EMRYS
 	 * @version 2011-7-26
 	 */
 	private class ServletContextAdaptor implements ServletContext {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2005, 2008 Cognos Incorporated, IBM Corporation, Hirisun and others.
+ * Copyright (c) 2005, 2008 Cognos Incorporated, IBM Corporation, EMRYS and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,7 @@
  * Contributors:
  *     Cognos Incorporated - initial API and implementation
  *     IBM Corporation - bug fixes and enhancements
- *     Hirisun Inc -  modification for WebOSGi framework.
+ *     EMRYS Inc -  modification for WebOSGi framework.
  *     Code 9 - bug fixes and enhancements
  *******************************************************************************/
 package org.emrys.core.launcher.internal;
@@ -1086,7 +1086,7 @@ public class OSGiFwkLauncher implements IFwkEnvConstants {
 	 */
 	/**
 	 * 
-	 * @author Leo Chang - Hirisun
+	 * @author Leo Chang - EMRYS
 	 * @version 2011-7-4
 	 */
 	protected static class ChildFirstURLClassLoader extends

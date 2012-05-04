@@ -1,9 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2010 Hirisun Corporation.
+ * Copyright (c) 2010 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
- * http://www.hirisun.com/legal/epl-v10.html
+ * http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.core.runtime.resources.extension;
 
@@ -21,14 +21,14 @@ import org.osgi.framework.BundleListener;
 /**
  * The file upload service extension point register.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2010-10-19
  */
 public class ResUploadSVCRegister implements BundleListener {
 	/**
 	 * The Upload Receiver's wrapper to contain the extension data.
 	 * 
-	 * @author Leo Chang - Hirisun
+	 * @author Leo Chang - EMRYS
 	 * @version 2011-8-1
 	 */
 	public static class ExtUploadReceiever {

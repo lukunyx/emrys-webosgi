@@ -1,9 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
- * http://www.hirisun.com/legal/epl-v10.html
+ * http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.core.runtime.jeewrappers;
 
@@ -23,7 +23,7 @@ import org.emrys.core.adapter.internal.ServletOutputStreamAdapter;
  * state flush operation, all modification of Response Status will be invalid
  * according to the Java EE standard.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-4-19
  */
 public class ServletOutputStreamWrapper extends ServletOutputStream implements

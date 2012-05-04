@@ -1,9 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
- * http://www.hirisun.com/legal/epl-v10.html
+ * http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.core.runtime.jeecontainer;
 
@@ -64,7 +64,7 @@ import org.emrys.core.adapter.internal.HttpServletResponseAdapter;
  * 
  * <code>serviet()<code> method. And then, the original SerlvetRequest will be wrapered back to javax.servlet.SerlvetRequest, and be dispatched to mapping servlet provided from Web Bundles.
  * 
- * @author Leo Chang - Hirisun
+ * @author Leo Chang - EMRYS
  * @version 2011-3-22
  */
 public class OSGiJEEContainer extends GenericServlet implements
@@ -438,7 +438,7 @@ public class OSGiJEEContainer extends GenericServlet implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.hirisun.components.web.core.IOSGiWebContainer#getBundledServletContext
+	 * com.EMRYS.components.web.core.IOSGiWebContainer#getBundledServletContext
 	 * (java.lang.String)
 	 */
 	public IBundledServletContext getBundledServletContext(String bundlePrefix) {

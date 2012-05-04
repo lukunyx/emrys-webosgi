@@ -1,9 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011 Hirisun Corporation.
+ * Copyright (c) 2011 EMRYS Corporation.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Hirisun License v1.0
+ * are made available under the terms of the EMRYS License v1.0
  * which accompanies this distribution, and is available at
- * http://www.hirisun.com/legal/epl-v10.html
+ * http://www.EMRYS.com/legal/epl-v10.html
  *******************************************************************************/
 package org.emrys.core.runtime.jeecontainer;
 
@@ -23,8 +23,8 @@ import org.emrys.core.runtime.jeewrappers.HttpServletResponseWrapper;
 /**
  * The Bundled Request Dispatcher.
  * 
- * @see {@link com.hirisun.components.web.core.jeecontainer.BundledServletContext #getRequestDispatcher(String)}
- * @author Leo Chang - Hirisun
+ * @see {@link com.EMRYS.components.web.core.jeecontainer.BundledServletContext #getRequestDispatcher(String)}
+ * @author Leo Chang - EMRYS
  * @version 2011-3-31
  */
 public class BundledRequestDispatcher implements RequestDispatcher {
@@ -64,7 +64,7 @@ public class BundledRequestDispatcher implements RequestDispatcher {
 
 	/**
 	 * Serve the reqeust, wiring back to the
-	 * {@link com.hirisun.components.web.core.jeecontainer.OSGiJEEContainer#service(ServletRequest, ServletResponse)}
+	 * {@link com.EMRYS.components.web.core.jeecontainer.OSGiJEEContainer#service(ServletRequest, ServletResponse)}
 	 * method. Forward and include on this method, will not trigger the servlet
 	 * filters.
 	 * 
