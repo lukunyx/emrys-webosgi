@@ -18,47 +18,47 @@
    </license>
 
    <requires>
-      <import plugin="com.EMRYS.part3rd.jee" version="2.5.0" match="greaterOrEqual"/>
+      <import plugin="org.part3rd.jee" version="2.5.0" match="greaterOrEqual"/>
       <import plugin="org.emrys.common" version="1.0.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
-         id="com.EMRYS.part3rd.apache.commons"
+         id="org.part3rd.apache.commons"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="com.EMRYS.part3rd.dom4j"
+         id="org.part3rd.dom4j"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="com.EMRYS.part3rd.jee"
+         id="org.part3rd.jee"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="com.EMRYS.part3rd.log4j"
+         id="org.part3rd.log4j"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="com.EMRYS.part3rd.jpa"
+         id="org.part3rd.jpa"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="com.EMRYS.part3rd.dojo"
+         id="org.part3rd.dojo"
          download-size="0"
          install-size="0"
          version="0.0.0"
