@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="extJspTags" name="extJspTags" schema="schema/extJspTags.exsd"/>
+   <extension-point id="webContentPaths" name="Web Content Folder path in bundle." schema="schema/webContentPaths.exsd"/>
+   <extension-point id="workspaceDef" name="workspaceDef" schema="schema/workspaceDef.exsd"/>
+   <extension-point id="rootResources" name="The .jsp or other resources need to be accessed in web root path." schema="schema/rootResources.exsd"/>
+   <extension-point id="reqExtProcessor" name="Process http request before and after servlet." schema="schema/reqExtProcessor.exsd"/>
+   <extension-point id="EarlyStarter" name="Early Starter when Framework starting." schema="schema/EarlyStarter.exsd"/>
+   <extension-point id="jeeSvcContribution" name="JavaEE Service Component Extension" schema="schema/jeeSvcContribution.exsd"/>
+   <extension
+         point="org.emrys.core.runtime.webContentPaths">
+      <path
+            bundle-path="WebContent"
+            id="org.emrys.core.runtime.path0"
+            indentifier-class="org.emrys.core.runtime.extension.DefaultWebContentIndentifier">
+      </path>
+      <path
+            bundle-path="WebRoot"
+            id="org.emrys.core.runtime.path1"
+            indentifier-class="org.emrys.core.runtime.extension.DefaultWebContentIndentifier">
+      </path>
+   </extension>
+   <extension
+         point="org.emrys.core.runtime.workspaceDef">
+      <workspace
+            id="org.emrys.core.runtime.defaultworkspace"
+            name="the default workspace directory definition."
+            priority="0"
+            target-dir="${platform-dir}/workspace">
+      </workspace>
+   </extension>
+
+</plugin>

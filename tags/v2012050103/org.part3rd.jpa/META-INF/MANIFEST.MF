@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jpa 2.0 Specific API
+Bundle-SymbolicName: org.part3rd.jpa;singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Bundle-Vendor: EMRYS&Apache
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ClassPath: lib/geronimo-jpa_2.0_spec-1.1.jar,
+ .
+Export-Package: javax.persistence,
+ javax.persistence.criteria,
+ javax.persistence.metamodel,
+ javax.persistence.spi
+Bundle-Activator: org.apache.geronimo.specs.jpa.PersistenceActivator
+Bundle-ActivationPolicy: lazy
