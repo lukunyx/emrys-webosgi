@@ -5,9 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Insert title here</title>
+<title>WebOSGi application</title>
 </head>
 <body>
 <h1>Empty home page of WebOSGi launcher application</h1>
+<h3>Emrys WebOSGi project website:</h3>
+<a href="http://emrys-webosgi.googlecode.com">http://emrys-webosgi.googlecode.com</a> 
+
 </body>
 </html>
