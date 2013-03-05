@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Web Resource service plugin
+Bundle-SymbolicName: org.emrys.webosgi.core.resource;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.emrys.webosgi.core.resource.ResroucesCom
+Bundle-Vendor: EMRYS
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: javax.servlet;version="2.5.0",
+ javax.servlet.http;version="2.5.0",
+ org.emrys.webosgi.launcher.internal,
+ org.emrys.webosgi.launcher.internal.adapter,
+ org.osgi.framework;version="1.3.0"
+Require-Bundle: org.emrys.webosgi.core;bundle-version="1.0.0";visibility:=reexport,
+ org.emrys.p3rd.apache.commons;bundle-version="1.0.0"
+Bundle-ClassPath: .,
+ lib/cos.jar
+Export-Package: org.emrys.webosgi.core.resource,
+ org.emrys.webosgi.core.resource.client,
+ org.emrys.webosgi.core.resource.extension,
+ org.emrys.webosgi.core.resource.util
+Bundle-ActivationPolicy: lazy
