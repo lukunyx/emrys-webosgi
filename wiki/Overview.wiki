@@ -1,4 +1,4 @@
-#summary Overview.
+#summary Overview of WebOSGi Framework.
 #labels Featured
 
 = WebOSGi概述 =
