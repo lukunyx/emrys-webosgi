@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.emrys.webosgi.feature"
+      label="Web Container Feature"
+      version="1.0.0.qualifier"
+      provider-name="EMRYS">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime" version="3.4.0"/>
+      <import plugin="org.emrys.p3rd.jee" version="2.5.0" match="greaterOrEqual"/>
+      <import plugin="org.emrys.p3rd.dom4j" version="1.6.1" match="greaterOrEqual"/>
+      <import plugin="org.emrys.p3rd.apache.commons" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.equinox.http.registry" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.osgi.services" version="3.1.0"/>
+   </requires>
+
+   <plugin
+         id="org.emrys.webosgi.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.emrys.webosgi.launcher"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.emrys.webosgi.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.emrys.webosgi.core.resource"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.emrys.webosgi.launcher.jee"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.emrys.webosgi.launcher.osgi"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.emrys.webosgi.launcher.configurator"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

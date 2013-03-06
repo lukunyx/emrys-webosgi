@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="resPlublishService" name="resources to published in the web file service" schema="schema/resPlublishService.exsd"/>
+   <extension-point id="resUploadService" name="upload fild recievers" schema="schema/resUploadService.exsd"/>
+   <extension
+         id="org.emrys.webosgi.core.resource.defaultfroot"
+         name="OSGI Web Application&apos;s default root."
+         point="org.emrys.webosgi.core.resource.resPlublishService">
+      <folder
+            alias="/"
+            path="/"
+            quik-visit-id="osgiroot">
+         <filter
+               included="true"
+               pattern="WEB-INF">
+         </filter>
+      </folder>
+      <authority
+            id="org.emrys.webosgi.core.resource.extension.DefaultResourceVisitController"
+            visit-controller="org.emrys.webosgi.core.resource.extension.DefaultResourceVisitController">
+      </authority>
+   </extension>
+   <extension
+         point="org.emrys.webosgi.core.resource.resUploadService">
+      <reciever
+            class="org.emrys.webosgi.core.resource.extension.DefaultUploadFileReciever"
+            id="org.emrys.webosgi.core.resource.reciever"
+            name="The default reciever of upload file which will save the file in default directory and record."
+            priority="0">
+      </reciever>
+   </extension>
+   <extension
+         point="org.emrys.webosgi.core.wabDeployer">
+      <deployer
+            class="org.emrys.webosgi.core.resource.WebResourceDeployer">
+      </deployer>
+   </extension>
+
+</plugin>

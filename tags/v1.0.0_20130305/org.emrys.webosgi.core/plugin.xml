@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="extJspTags" name="extJspTags" schema="schema/extJspTags.exsd"/>
+   <extension-point id="workspaceDef" name="workspaceDef" schema="schema/workspaceDef.exsd"/>
+   <extension-point id="rootResources" name="The .jsp or other resources need to be accessed in web root path." schema="schema/rootResources.exsd"/>
+   <extension-point id="reqExtProcessor" name="Process http request before and after servlet." schema="schema/reqExtProcessor.exsd"/>
+   <extension-point id="EarlyStarter" name="Early Starter when Framework starting." schema="schema/EarlyStarter.exsd"/>
+   <extension-point id="jeeSvcContribution" name="JavaEE Service Component Extension" schema="schema/jeeSvcContribution.exsd"/>
+   <extension-point id="JeeWebApplication" name="JavaEE Web Application" schema="schema/JeeWebApplication.exsd"/>
+   <extension-point id="wabDeployer" name="Web application bundle deployer" schema="schema/wabDeployer.exsd"/>
+   <extension
+         point="org.emrys.webosgi.core.workspaceDef">
+      <workspace
+            id="org.emrys.webosgi.core.defaultworkspace"
+            name="the default workspace directory definition."
+            priority="0"
+            target-dir="${platform-dir}/workspace">
+      </workspace>
+   </extension>
+   <extension
+         point="org.emrys.webosgi.common.externalStringLocale">
+      <decider
+            class="org.emrys.webosgi.core.extension.DefaultStrLocaleDecider"
+            id="org.emrys.webosgi.core.langdecider"
+            priority="0">
+      </decider>
+   </extension>
+
+</plugin>
