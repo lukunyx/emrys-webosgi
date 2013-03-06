@@ -1,4 +1,4 @@
-#summary Quick start tutorial by launthing a sample.
+#summary Quick start tutorial by launching a sample.
 
 = Introduction =
 
