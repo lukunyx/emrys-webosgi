@@ -1,9 +1,0 @@
-
-= Use OSGi Java Web application =
-
-Use OSGi Java Web application
-
-
-= Details =
-
-Use OSGi Java Web application
