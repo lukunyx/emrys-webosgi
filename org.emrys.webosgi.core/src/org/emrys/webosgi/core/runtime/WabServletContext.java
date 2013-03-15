@@ -26,7 +26,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.emrys.webosgi.common.util.FileUtil;
 import org.emrys.webosgi.core.FwkActivator;
-import org.emrys.webosgi.core.WebComActivator;
 import org.emrys.webosgi.core.classloader.BundledClassLoaderFactory;
 import org.emrys.webosgi.core.internal.FwkRuntime;
 import org.emrys.webosgi.core.jeeres.FilterDelegate;
@@ -82,10 +81,6 @@ public class WabServletContext implements IWABServletContext {
 	 * OSGiWebContainer instance
 	 */
 	private final IOSGiWebContainer webContainer;
-	/**
-	 * WebContent Path of this bundle servlet context.
-	 */
-	private final IPath webContentRootPath;
 
 	/**
 	 * indicating whether only use Global Servlet Context. If true, realating
@@ -104,17 +99,14 @@ public class WabServletContext implements IWABServletContext {
 	 * Error pages of this bundled ServletContext
 	 */
 	private Map<Integer, String> errPages;
-	/**
-	 * The activator instance of this ServletContext bundled in.
-	 */
-	private WebComActivator webHostActivator;
 
 	// The default session timeout be set 1800 seconds.
 	private int timeout = 1800;
 	private final Bundle wabundle;
 	private final String wabCtxPath;
 	private final boolean isWebHostBundle;
-	private final File webContentRoot;
+	private File webContentRoot;
+	private IPath webContentRootPath;
 	private boolean isActive;
 	private final IWebApplication webApplication;
 
@@ -128,9 +120,12 @@ public class WabServletContext implements IWABServletContext {
 		// Judge if this wab is a host application with the context path "/".
 		this.isWebHostBundle = WebBundleUtil.isHostWebBundle(getBundle());// "/".equals(wabCtxPath);
 		// Always force clean the web content directory once the servlet context
-		// init.
-		this.webContentRoot = webApplication.findWebContentRoot(true);
-		this.webContentRootPath = new Path(webContentRoot.getAbsolutePath());
+		// init. If no Web Content found, this WAB has no Web Resources.
+		File tmpWebContentRoot = webApplication.findWebContentRoot(true);
+		if (tmpWebContentRoot != null) {
+			this.webContentRoot = tmpWebContentRoot;
+			this.webContentRootPath = new Path(webContentRoot.getAbsolutePath());
+		}
 		initAttributes();
 	}
 

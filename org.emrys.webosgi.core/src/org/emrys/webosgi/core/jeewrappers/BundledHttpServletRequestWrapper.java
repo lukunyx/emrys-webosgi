@@ -612,7 +612,12 @@ public class BundledHttpServletRequestWrapper implements HttpServletRequest,
 		else {
 			map = httpServletRequestAdatper.getParameterMap();
 			if (newParameters != null) {
-				map.putAll(newParameters);
+				// External JavaEE server may not allow to put new param in this
+				// map. We create a new hash map.
+				HashMap tmpMap = new HashMap();
+				tmpMap.putAll(map);
+				tmpMap.putAll(newParameters);
+				map = tmpMap;
 			}
 		}
 

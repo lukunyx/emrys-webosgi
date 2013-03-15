@@ -21,7 +21,7 @@ import org.emrys.webosgi.core.service.IOSGiWebContainer;
  * @version 2011-3-31
  */
 public class BundledRequestDispatcher implements RequestDispatcher {
-	private final String prefix;
+	private final String webCtxPath;
 	private final IOSGiWebContainer jeeContainerSVC;
 	private String targetPath;
 	private Object include_context_path;
@@ -31,8 +31,8 @@ public class BundledRequestDispatcher implements RequestDispatcher {
 	private Object include_query_string;
 	private boolean doInternalFilter;
 
-	public BundledRequestDispatcher(String bundlePrefix, String path) {
-		this.prefix = bundlePrefix;
+	public BundledRequestDispatcher(String wabCtxPath, String path) {
+		this.webCtxPath = wabCtxPath;
 		this.targetPath = path;
 		jeeContainerSVC = FwkRuntime.getInstance().getWebContainer();
 	}
@@ -47,10 +47,10 @@ public class BundledRequestDispatcher implements RequestDispatcher {
 		// Store these attribute in this request.
 		/*
 		 * javax.servlet.include.context_path = ContextPath
-		 * 〄1�7〄1�7javax.servlet.include.servlet_path = ServletPath
-		 * 〄1�7〄1�7javax.servlet.include.path_info = PathInfo
-		 * 〄1�7〄1�7javax.servlet.include.query_string = QueryString
-		 * 〄1�7〄1�7javax.servlet.include.request_uri = RequestURI
+		 * javax.servlet.include.servlet_path = ServletPath
+		 * javax.servlet.include.path_info = PathInfo
+		 * javax.servlet.include.query_string = QueryString
+		 * javax.servlet.include.request_uri = RequestURI
 		 */
 		service(request, response, true);
 	}
@@ -93,9 +93,9 @@ public class BundledRequestDispatcher implements RequestDispatcher {
 					targetPath = "/" + targetPath;
 				}
 
-				if (this.prefix != null && this.prefix.length() != 0
-						&& !targetPath.startsWith("/" + this.prefix + "/")) {
-					targetPath = "/" + this.prefix + targetPath;
+				if (this.webCtxPath != null && this.webCtxPath.length() != 0
+						&& !targetPath.startsWith("/" + this.webCtxPath + "/")) {
+					targetPath = this.webCtxPath + targetPath;
 				}
 			}
 

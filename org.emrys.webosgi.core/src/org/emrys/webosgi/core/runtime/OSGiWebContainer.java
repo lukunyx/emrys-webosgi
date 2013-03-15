@@ -160,6 +160,7 @@ public class OSGiWebContainer extends GenericServlet implements
 	}
 
 	private void collectHostAddresses() throws Exception {
+		// Try to get framework config for the host name and port.
 		// Fetch the host addresses(IPs) of the framework server, and the set
 		// the recommended one as first.
 		FwkRuntime fwkRuntime = FwkRuntime.getInstance();
