@@ -2,10 +2,11 @@ package org.emrys.webosgi.core.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.FileLocator;
@@ -16,6 +17,7 @@ import org.emrys.webosgi.common.util.FileUtil;
 import org.emrys.webosgi.core.FwkActivator;
 import org.emrys.webosgi.core.IFwkConstants;
 import org.emrys.webosgi.core.internal.FwkRuntime;
+import org.emrys.webosgi.core.service.IWABServletContext;
 import org.osgi.framework.Bundle;
 
 /**
@@ -96,6 +98,18 @@ public class WebBundleUtil extends BundleServiceUtil implements IFwkConstants {
 		return null;
 	}
 
+	/**
+	 * Try to extract the WebContent directory from WAB bundle if the bundle is
+	 * a zipped file. If extracted resource not exists, the WebContent will be
+	 * extracted to local directory. If the force-update argment true and the
+	 * bundle file last-modify timestamp is newer than the mark in extracted
+	 * resource.
+	 * 
+	 * @param wabundle
+	 * @param forceUpdate
+	 * @return
+	 * @throws IOException
+	 */
 	public static IPath getExtractedWebContentRoot(Bundle wabundle,
 			boolean forceUpdate) throws IOException {
 
@@ -136,13 +150,45 @@ public class WebBundleUtil extends BundleServiceUtil implements IFwkConstants {
 						wabundle).append("WebContent").toFile();
 				// Synchronized the web content prepare to a webundle.
 				synchronized (wabundle) {
-					if (forceUpdate && webContentRoot.exists())
-						FileUtil.deleteAllFile(webContentRoot, null);
+					File metadataFile = new File(webContentRoot, ".metadata");
+					if (forceUpdate && webContentRoot.exists()) {
+						// Check the .metadata file in existant WebContent to
+						// compare the last-modified timestamp. If last-modified
+						// not exists or not equals with the bundle file's, do
+						// delete all existant WebContent resource.
+						boolean toDelete = true;
+						if (metadataFile.exists()) {
+							try {
+								Properties prop = new Properties();
+								prop.load(new FileInputStream(metadataFile));
+								String lastModified = prop
+										.getProperty("last-modified");
+								if (Long.toString(bundleFile.lastModified())
+										.equals(lastModified)) {
+									toDelete = false;
+								}
+							} catch (Exception e) {
+								// e.printStackTrace();
+							}
+						}
+						if (toDelete)
+							FileUtil.deleteAllFile(webContentRoot, null);
+					}
 
 					if (!webContentRoot.exists()) {
 						webContentRoot.mkdirs();
 						FileUtil.unZipFile(bundleFile, webContentPath
 								.toPortableString(), webContentRoot);
+						// Record the last-modified timestamp in .metadata file.
+						try {
+							Properties prop = new Properties();
+							prop.setProperty("last-modified", Long
+									.toString(bundleFile.lastModified()));
+							prop.store(new FileOutputStream(metadataFile),
+									"UTF-8");
+						} catch (Exception e) {
+							// e.printStackTrace();
+						}
 					}
 				}
 			}
@@ -150,38 +196,6 @@ public class WebBundleUtil extends BundleServiceUtil implements IFwkConstants {
 
 		if (webContentRoot != null)
 			return new Path(webContentRoot.getAbsolutePath());
-		return null;
-	}
-
-	/**
-	 * Try to find the web.xml file for a web appication bundle, and return its
-	 * content as InputStream. If not find any, return null.
-	 * 
-	 * @param wabundle
-	 * @return the InputStream of the web.xml file's content.
-	 * @throws Exception
-	 */
-	public static InputStream getWebXmlContent(Bundle wabundle)
-			throws Exception {
-		if (webHostBundle == null) {
-			webHostBundle = findHostWebBundle();
-		}
-
-		if (webHostBundle == wabundle) {
-			File hostBundleFile = FileLocator.getBundleFile(webHostBundle);
-			IPath webXmlPath = new Path(hostBundleFile.getAbsolutePath())
-					.append("WEB-INF/" + HOST_WEB_XML_NAME);
-			return new FileInputStream(webXmlPath.toFile());
-		}
-
-		IPath webContentPath = findWebContentPath(wabundle);
-		if (webContentPath != null) {
-			IPath webXmlPath = webContentPath.append("WEB-INF/web.xml");
-			URL webxmlRes = wabundle.getEntry(webXmlPath.toPortableString());
-			if (webxmlRes != null)
-				return webxmlRes.openStream();
-		}
-
 		return null;
 	}
 
@@ -231,10 +245,15 @@ public class WebBundleUtil extends BundleServiceUtil implements IFwkConstants {
 		// We prefer to "WebContent/WEB-INF/web.xml" path. If not, find
 		// ./WEB-INF/web.xml , return one with the shortest
 		// path.
-		while (entries.hasMoreElements()) {
+		while (entries != null && entries.hasMoreElements()) {
 			IPath webxmlPath = new Path(entries.nextElement().getPath());
 			IPath bundleFilePath = new Path(bundle.getEntry("/").getPath());
-			IPath relPath = webxmlPath.makeRelativeTo(bundleFilePath);
+
+			// OSGi Euqinox r4.2 not has IPath.makeRelativeTo();
+			// IPath relPath = webxmlPath.makeRelativeTo(bundleFilePath);
+			int commonLength = webxmlPath.matchingFirstSegments(bundleFilePath);
+			IPath relPath = webxmlPath.removeFirstSegments(commonLength);
+
 			// Validate the relative path of web.xml.
 			if (relPath.segmentCount() >= 2
 					&& relPath.segment(relPath.segmentCount() - 2).equals(
@@ -260,5 +279,19 @@ public class WebBundleUtil extends BundleServiceUtil implements IFwkConstants {
 	public static boolean isWebAppBundle(Bundle bundle) {
 		String ctxPath = getWabContextPathHeader(bundle);
 		return StringUtils.isNotEmpty(ctxPath);
+	}
+
+	/**
+	 * Find the wab bundle by its servlet context path.
+	 * 
+	 * @param wabCtxPath
+	 * @return
+	 */
+	public static Bundle findWabByContextPath(String wabCtxPath) {
+		IWABServletContext ctx = FwkActivator.getInstance().getJeeContainer()
+				.getWABServletContext(wabCtxPath);
+		if (ctx != null)
+			return ctx.getBundle();
+		return null;
 	}
 }

@@ -159,9 +159,11 @@ public class FilterDelegate extends AbstMultiInstUrlMapObject implements Filter 
 		if (!status.isOK()) {
 			Throwable e = status.getException();
 			if (e instanceof ServletException)
+				throw (ServletException) e;
+			else if (e != null)
 				throw new ServletException(e);
 			else
-				throw new ServletException(status.getException());
+				throw new ServletException(status.getMessage());
 		}
 	}
 

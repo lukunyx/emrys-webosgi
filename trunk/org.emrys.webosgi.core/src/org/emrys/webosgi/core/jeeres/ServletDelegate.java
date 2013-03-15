@@ -183,7 +183,10 @@ public class ServletDelegate extends AbstMultiInstUrlMapObject implements
 			Throwable e = status.getException();
 			if (e instanceof ServletException)
 				throw (ServletException) e;
-			throw new ServletException(status.getException());
+			else if (e != null)
+				throw new ServletException(e);
+			else
+				throw new ServletException(status.getMessage());
 		}
 	}
 

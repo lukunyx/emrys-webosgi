@@ -4,6 +4,7 @@
 package org.emrys.webosgi.core.runtime;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.emrys.webosgi.core.FwkActivator;
 import org.emrys.webosgi.core.IFwkConstants;
@@ -242,8 +245,28 @@ public class WebApplication implements IWebApplication {
 		// check double named Name Space and its prefix.
 	}
 
+	/**
+	 * Default method to find web.xml file from web content directory.
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	protected InputStream getWebXmlInput() throws Exception {
-		return WebBundleUtil.getWebXmlContent(bundle);
+		// If this web bundle has not Web Content directory, not find any
+		// web.xml.
+		if (webContentRoot != null) {
+			String webXmlFileName = "web.xml";
+			// If this wab bundle is bridge web host bundle, use special
+			// web.xml file name.
+			if (getBundleServletContext().isHostBundle())
+				webXmlFileName = WebBundleUtil.HOST_WEB_XML_NAME;
+			IPath webXmlFilePath = new Path(webContentRoot.getAbsolutePath())
+					.append("WEB-INF/" + webXmlFileName);
+			File webXmlFile = webXmlFilePath.toFile();
+			if (webXmlFile != null && webXmlFile.exists())
+				return new FileInputStream(webXmlFile);
+		}
+		return null;
 	}
 
 	protected void initWebConfig() throws ServiceInitException {

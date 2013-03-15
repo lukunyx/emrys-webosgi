@@ -66,10 +66,6 @@ public class BundledJeeContextClassLoader extends BundleProxyClassLoader {
 	@Override
 	protected Class<?> loadClass(String name, boolean resolve)
 			throws ClassNotFoundException {
-		// If the caller class is in another bundle, not the backing bundle, try
-		// to load class from
-		// that bundle at first. This let the caller's bundle has high priority
-		// to find.
 		// The classical problem is the
 		// "java.lang.LinkageError: loader constraint violation"
 		// excepiton when Spring2.5.6 try to generate
@@ -78,12 +74,19 @@ public class BundledJeeContextClassLoader extends BundleProxyClassLoader {
 		// bundle has aop jars,
 		// spring try to generate proxy class by ThreadContextClassLoader, this
 		// problem will occur.
-		Class<?> clazz = searchCallerBundle(name);
+		// Here we can find caller class is from another bundle, try
+		// to load class from that bundle at first. This let the caller's bundle
+		// has high priorityto find. The Equinox
+		// BuddyPolicy loading can solve some problem like this if the third
+		// bundle try to load class with its bundle classoader.
+		// Eclipse-BuddyPolicy: registered
+		// Eclipse-RegisterBuddy: org.opengoss.orm.hibernate
+		/*Class<?> clazz = searchCallerBundle(name);
 		if (clazz != null) {
 			if (resolve)
 				resolveClass(clazz);
 			return clazz;
-		}
+		}*/
 
 		return super.loadClass(name, resolve);
 	}

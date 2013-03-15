@@ -1,6 +1,7 @@
 package org.emrys.webosgi.core;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.emrys.webosgi.common.ComActivator;
@@ -127,8 +129,10 @@ public class WebComActivator extends ComActivator implements IWebComActivator,
 	public File findWebContentRoot(boolean forceUpdate) {
 		if (webContentRoot == null || forceUpdate) {
 			try {
-				webContentRoot = WebBundleUtil.getExtractedWebContentRoot(
-						getBundle(), forceUpdate).toFile();
+				IPath webContentPath = WebBundleUtil
+						.getExtractedWebContentRoot(getBundle(), forceUpdate);
+				if (webContentPath != null)
+					webContentRoot = webContentPath.toFile();
 			} catch (IOException e) {
 				// e.printStackTrace();
 				log(e);
@@ -220,9 +224,13 @@ public class WebComActivator extends ComActivator implements IWebComActivator,
 	 * if possible.
 	 */
 	public void startApplication() {
+
 		synchronized (this) {
 			// Only call once.
 			if (!isWebServiceStarted() && !triedToStartFailed) {
+				// Enter app starting block.
+				FwkRuntime fwkRuntime = FwkRuntime.getInstance();
+				fwkRuntime.enterAppSvcStart(this);
 				try {
 					triedToStartFailed = true;
 					checkDoubleNsPrefix();
@@ -245,6 +253,9 @@ public class WebComActivator extends ComActivator implements IWebComActivator,
 											.getBundleSymbleName() + " ["
 									+ WebComActivator.this.getServiceNSPrefix()
 									+ "] published Failed.", t));
+				} finally {
+					// Quit app starting block.
+					fwkRuntime.quitAppSvcStart(this);
 				}
 			}
 		}
@@ -386,8 +397,28 @@ public class WebComActivator extends ComActivator implements IWebComActivator,
 		}
 	}
 
+	/**
+	 * Default method to find web.xml file from web content directory.
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	protected InputStream getWebXmlInput() throws Exception {
-		return WebBundleUtil.getWebXmlContent(getBundle());
+		// If this web bundle has not Web Content directory, not find any
+		// web.xml.
+		if (webContentRoot != null) {
+			String webXmlFileName = "web.xml";
+			// If this wab bundle is bridge web host bundle, use special
+			// web.xml file name.
+			if (getBundleServletContext().isHostBundle())
+				webXmlFileName = WebBundleUtil.HOST_WEB_XML_NAME;
+			IPath webXmlFilePath = new Path(webContentRoot.getAbsolutePath())
+					.append("WEB-INF/" + webXmlFileName);
+			File webXmlFile = webXmlFilePath.toFile();
+			if (webXmlFile != null && webXmlFile.exists())
+				return new FileInputStream(webXmlFile);
+		}
+		return null;
 	}
 
 	protected void initWebConfig() throws ServiceInitException {
