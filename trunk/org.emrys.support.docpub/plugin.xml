@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.help.toc">
+      <tocProvider
+            class="org.emrys.support.docpub.AutoFindTocProvider">
+      </tocProvider>
+   </extension>
+   <extension
+         point="org.eclipse.help.contentProducer">
+      <contentProducer
+            producer="org.emrys.support.docpub.DynaHelpContentProducer">
+      </contentProducer>
+   </extension>
+   <extension
+         point="org.emrys.webosgi.core.jeeSvcContribution">
+      <contribution
+            plugin-id="com.smartdot.support.docpub">
+      </contribution>
+   </extension>
+
+</plugin>

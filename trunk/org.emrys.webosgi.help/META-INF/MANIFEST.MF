@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Help Doc Repository Support plugin
+Bundle-SymbolicName: org.emrys.webosgi.help;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.emrys.webosgi.help.HelpSupportActivator
+Bundle-Vendor: SMARTDOT
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: javax.servlet;version="2.5.0",
+ javax.servlet.http;version="2.5.0",
+ javax.servlet.resources;version="2.5.0",
+ org.osgi.framework;version="1.3.0"
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.help.base;bundle-version="3.3.0",
+ org.eclipse.equinox.http.registry;bundle-version="1.0.0",
+ org.eclipse.osgi.services;bundle-version="3.1.0",
+ org.emrys.webosgi.core;bundle-version="1.0.0",
+ org.emrys.webosgi.launcher.osgi;bundle-version="1.0.0"
+Export-Package: org.emrys.webosgi.help
