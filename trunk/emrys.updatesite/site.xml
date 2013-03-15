@@ -2,4 +2,5 @@
 <site>
    <feature url="features/org.emrys.webosgi.feature_1.0.0.qualifier.jar" id="org.emrys.webosgi.feature" version="1.0.0.qualifier"/>
    <feature url="features/org.emrys.p3rd.feature_1.0.0.qualifier.jar" id="org.emrys.p3rd.feature" version="1.0.0.qualifier"/>
+   <feature url="features/org.emrys.support.feature_1.0.0.qualifier.jar" id="org.emrys.support.feature" version="1.0.0.qualifier"/>
 </site>
