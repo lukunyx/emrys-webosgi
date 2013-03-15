@@ -33,5 +33,4 @@ org.eclipse.help,3.4.1.v20090805_35x,plugins/org.eclipse.help_3.4.1.v20090805_35
 org.eclipse.help.base,3.4.0.v201002111343,plugins/org.eclipse.help.base_3.4.0.v201002111343.jar,3,true
 org.eclipse.help.webapp,3.4.1.v20091009_35x,plugins/org.eclipse.help.webapp_3.4.1.v20091009_35x.jar,3,true
 org.eclipse.osgi.services,3.2.0.v20090520-1800,plugins/org.eclipse.osgi.services_3.2.0.v20090520-1800.jar,3,true
-org.eclipse.persistence.jpa.equinox.weaving,1.1.3.v20091002-r5404,plugins/org.eclipse.persistence.jpa.equinox.weaving_1.1.3.v20091002-r5404.jar,3,true
 fwk.launcher.jee,1.0.0,#{fwk.webapp.deploy.path},4,true
