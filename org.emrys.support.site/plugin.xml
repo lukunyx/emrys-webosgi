@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="id1"
+         name="name"
+         point="org.emrys.webosgi.core.resource.resPlublishService">
+         <file
+            alias="/bundleinfo.xml"
+            path="/bundleinfo.xml"
+            quik-visit-id="bundleinfo.xml"
+            resolver-id="file.bundleinfo">
+      </file>
+      <resolver
+            class="org.emrys.support.site.BundleInfoFileResolver"
+            id="file.bundleinfo">
+      </resolver>
+      <folder
+            alias="/features"
+            path="/features"
+            quik-visit-id="features"
+            resolver-id="folder.features">
+      </folder>
+      <resolver
+            class="org.emrys.support.site.FeaturesSiteResolver"
+            id="folder.features">
+      </resolver>
+      <file
+            alias="/features/license.html"
+            path="/features/license.html"
+            quik-visit-id="license.html"
+            resolver-id="file.copyright_license">
+      </file>
+      <file
+            alias="/features/copyright.html"
+            path="/features/copyright.html"
+            quik-visit-id="copyright.html"
+            resolver-id="file.copyright_license">
+      </file>
+      <resolver
+            class="org.emrys.support.site.CopyrightLicenseResolver"
+            id="file.copyright_license">
+      </resolver>
+   </extension>
+   <extension
+         point="org.emrys.webosgi.core.resource.resUploadService">
+      <reciever
+            class="org.emrys.support.site.FeatureSiteReciever"
+            id="com.hirisun.components.web.feature.reciever"
+            name="Feature Update Site Reciever"
+            priority="1" >
+      </reciever>
+   </extension>
+   <extension
+         point="org.emrys.webosgi.core.jeeSvcContribution">
+      <contribution
+            plugin-id="com.smartdot.support.site">
+      </contribution>
+   </extension>
+
+</plugin>
