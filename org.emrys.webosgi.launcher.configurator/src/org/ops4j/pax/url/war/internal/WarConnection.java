@@ -17,8 +17,10 @@
  */
 package org.ops4j.pax.url.war.internal;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Properties;
 
 import org.ops4j.pax.swissbox.bnd.BndUtils;
@@ -58,8 +60,14 @@ public class WarConnection extends AbstractConnection {
 		final Properties instructions = BndUtils.parseInstructions(getURL()
 				.getQuery());
 		// war file to be processed
-		instructions.setProperty(ServiceConstants.INSTR_WAR_URL, getURL()
-				.getPath());
+		// The war url may have some encoded chars like blank char.
+		String warPath = getURL().getPath();
+		try {
+			warPath = URLDecoder.decode(warPath, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		instructions.setProperty(ServiceConstants.INSTR_WAR_URL, warPath);
 		// default import packages
 		if (!instructions.containsKey("Import-Package")) {
 			String packages = "javax.servlet,"
