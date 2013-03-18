@@ -15,9 +15,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Manifest;
@@ -33,7 +35,6 @@ import org.osgi.framework.BundleContext;
 import aQute.lib.osgi.Analyzer;
 import aQute.lib.osgi.Jar;
 import aQute.libg.version.Version;
-
 
 /*
  * SimpleConfigurator provides ways to install bundles listed in a file
@@ -140,7 +141,8 @@ public class SimpleConfiguratorImpl implements Configurator {
 		return null;
 	}
 
-	public void applyConfiguration(URL url) throws IOException {
+	public void applyConfiguration(URL url, boolean excludeInstall)
+			throws IOException {
 		synchronized (configurationLock) {
 			if (url == null)
 				return;
@@ -148,8 +150,12 @@ public class SimpleConfiguratorImpl implements Configurator {
 
 			if (this.configApplier == null)
 				configApplier = new ConfigApplier(context, bundle);
-			configApplier.install(url, isExclusiveInstallation());
+			configApplier.install(url, excludeInstall);
 		}
+	}
+
+	public void applyConfiguration(URL url) throws IOException {
+		applyConfiguration(url, isExclusiveInstallation());
 	}
 
 	private boolean isExclusiveInstallation() {
@@ -163,39 +169,53 @@ public class SimpleConfiguratorImpl implements Configurator {
 	public void applyConfiguration() throws IOException {
 		synchronized (configurationLock) {
 			configurationURL = getConfigurationURL();
+			// if configured url is null, indicating this invoke is install wab
+			// apps later. Do not use exclude install mode.
+			boolean laterInstallWebapps = configurationURL == null;
 			// Scan plugins/ directory and append all plugins at the head of the
 			// configuration file.
 			configurationURL = appendScanedPlugins(configurationURL);
-			applyConfiguration(configurationURL);
+			applyConfiguration(configurationURL, !laterInstallWebapps);
 		}
 	}
 
 	private URL appendScanedPlugins(URL configurationURL) throws IOException {
 		URI base = EquinoxUtils.getInstallLocationURI(context);
 		File newCfgFile = File.createTempFile("bundles", ".info");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				configurationURL.openStream(), "UTF-8"));
 		PrintWriter printer = new PrintWriter(newCfgFile, "UTF-8");
+
 		try {
 			List<String> bundleSymbleNames = new ArrayList<String>();
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				if (!line.trim().startsWith("#")) {
-					String[] segs = line.split(",");
-					if (segs.length > 2)
-						bundleSymbleNames.add(segs[0] + "," + segs[1]);
+			// If the bundles information URL not given, the framework is
+			// embedded from a OSGi runtime, and we only need to scan web
+			// bundles from WebApps dir.
+			if (configurationURL != null) {
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(configurationURL.openStream(),
+								"UTF-8"));
+				try {
+					String line = null;
+					while ((line = reader.readLine()) != null) {
+						if (!line.trim().startsWith("#")) {
+							String[] segs = line.split(",");
+							if (segs.length > 2)
+								bundleSymbleNames.add(segs[0] + "," + segs[1]);
+						}
+						printer.println(line);
+					}
+				} finally {
+					reader.close();
 				}
-				printer.println(line);
-			}
 
-			// Scan the default plugins root. /plugins
-			scanPlugins(base, "plugins", bundleSymbleNames, printer);
-			scanPlugins(base, "deploy", bundleSymbleNames, printer);
+				// Scan the default plugins root. /plugins
+				scanPlugins(base, "plugins", bundleSymbleNames, printer);
+				scanPlugins(base, "deploy", bundleSymbleNames, printer);
+			}
 			// Scan for .war web application.
 			scanWebApps(base, "webapps", bundleSymbleNames, printer);
 			printer.flush();
 		} finally {
-			reader.close();
+
 			printer.flush();
 			printer.close();
 		}
@@ -204,13 +224,15 @@ public class SimpleConfiguratorImpl implements Configurator {
 
 	private void scanWebApps(URI base, String path,
 			List<String> bundleSymbolNames, PrintWriter printer)
-			throws MalformedURLException {
-		File fwkInstallDir = new File(base.toURL().getFile());
-		File pluginsDir = new File(fwkInstallDir.getAbsolutePath() + "/" + path);
-		if (!pluginsDir.exists())
+			throws MalformedURLException, UnsupportedEncodingException {
+		URL baseFileURL = new URL(URLDecoder.decode(base.toURL()
+				.toExternalForm(), "UTF-8"));
+		File fwkInstallDir = new File(baseFileURL.getFile());
+		File webAppsDir = new File(fwkInstallDir, path);
+		if (!webAppsDir.exists())
 			return;
 
-		File[] webAppFiles = pluginsDir.listFiles();
+		File[] webAppFiles = webAppsDir.listFiles();
 		for (File f : webAppFiles) {
 			// Unlike bundle file, the symbolic name and version should be
 			// parsed from its MANISFEST.MF file at first.
@@ -260,7 +282,7 @@ public class SimpleConfiguratorImpl implements Configurator {
 			sb.append(version);
 			sb.append(",");
 			sb.append(ServiceConstants.PROTOCOL_WEB_BUNDLE + ":"
-					+ f.toURI().toURL().toString());
+					+ URLDecoder.decode(f.toURI().toURL().toString(), "UTF-8"));
 			sb.append(",");
 			sb.append(4);
 			sb.append(",");
@@ -272,9 +294,11 @@ public class SimpleConfiguratorImpl implements Configurator {
 
 	private void scanPlugins(URI base, String path,
 			List<String> bundleSymbleNames, PrintWriter printer)
-			throws MalformedURLException {
-		File fwkInstallDir = new File(base.toURL().getFile());
-		File pluginsDir = new File(fwkInstallDir.getAbsolutePath() + "/" + path);
+			throws MalformedURLException, UnsupportedEncodingException {
+		URL baseFileURL = new URL(URLDecoder.decode(base.toURL()
+				.toExternalForm(), "UTF-8"));
+		File fwkInstallDir = new File(baseFileURL.getFile());
+		File pluginsDir = new File(fwkInstallDir, path);
 		if (!pluginsDir.exists())
 			return;
 
