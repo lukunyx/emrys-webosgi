@@ -17,6 +17,7 @@ import javax.servlet.jsp.JspFactory;
 
 import org.apache.jasper.compiler.JspRuntimeContext;
 import org.apache.jasper.runtime.JspFactoryImpl;
+import org.emrys.webosgi.core.internal.FwkRuntime;
 
 /**
  * @author LeoChang
@@ -25,6 +26,7 @@ import org.apache.jasper.runtime.JspFactoryImpl;
 public class ServletWrapper implements Servlet {
 
 	private final Servlet servlet;
+	private Object osgiEmbeddedLauncher;
 	private static JspFactory jspFactoryIns;
 
 	public ServletWrapper(Servlet servlet) {
@@ -45,6 +47,10 @@ public class ServletWrapper implements Servlet {
 
 	public void init(ServletConfig arg0) throws ServletException {
 		servlet.init(arg0);
+		// If framework not OSGi embedded, we need to create a separate dir for
+		// this "/help" wab.
+		osgiEmbeddedLauncher = FwkRuntime.getInstance().getFrameworkAttribute(
+				FwkRuntime.ATTR_FWK_OSGI_EMBEDDED);
 	}
 
 	public void service(ServletRequest req, ServletResponse resp)
@@ -63,12 +69,13 @@ public class ServletWrapper implements Servlet {
 			JspFactory.setDefaultFactory(jspFactoryIns);
 		}
 
-		// Because the equinox help webapp will place jsp tmp class file at
-		// $tmp$/org/apache/jsp/, this will override the Host Wab's. We the
-		// reset the jsp tmp dir to a new one.
+		// Because in none OSGi embeded mode, the equinox help webapp will place
+		// jsp tmp class file at $tmp$/org/apache/jsp/, this will override the
+		// Host Wab's. We the reset the jsp tmp dir to a new one.
 		File oldJspTmpDir = null;
 		ServletContext servletCtx = null;
-		if (req instanceof HttpServletRequest) {
+		if (req instanceof HttpServletRequest
+				&& !Boolean.TRUE.equals(osgiEmbeddedLauncher)) {
 			servletCtx = ((HttpServletRequest) req).getSession()
 					.getServletContext();
 			oldJspTmpDir = (File) servletCtx
