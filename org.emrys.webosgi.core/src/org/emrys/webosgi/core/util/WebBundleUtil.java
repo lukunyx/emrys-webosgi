@@ -164,9 +164,11 @@ public class WebBundleUtil extends BundleServiceUtil implements IFwkConstants {
 						// delete all existant WebContent resource.
 						boolean toDelete = true;
 						if (metadataFile.exists()) {
+							FileInputStream in = new FileInputStream(
+									metadataFile);
 							try {
 								Properties prop = new Properties();
-								prop.load(new FileInputStream(metadataFile));
+								prop.load(in);
 								String lastModified = prop
 										.getProperty("last-modified");
 								if (Long.toString(bundleFile.lastModified())
@@ -175,6 +177,8 @@ public class WebBundleUtil extends BundleServiceUtil implements IFwkConstants {
 								}
 							} catch (Exception e) {
 								// e.printStackTrace();
+							} finally {
+								in.close();
 							}
 						}
 						if (toDelete)
@@ -186,14 +190,17 @@ public class WebBundleUtil extends BundleServiceUtil implements IFwkConstants {
 						FileUtil.unZipFile(bundleFile, webContentPath
 								.toPortableString(), webContentRoot);
 						// Record the last-modified timestamp in .metadata file.
+						FileOutputStream out = new FileOutputStream(
+								metadataFile);
 						try {
 							Properties prop = new Properties();
 							prop.setProperty("last-modified", Long
 									.toString(bundleFile.lastModified()));
-							prop.store(new FileOutputStream(metadataFile),
-									"UTF-8");
+							prop.store(out, "UTF-8");
 						} catch (Exception e) {
 							// e.printStackTrace();
+						} finally {
+							out.close();
 						}
 					}
 				}

@@ -364,7 +364,7 @@ public class WebComActivator extends ComActivator implements IWebComActivator,
 		// check double named Name Space and its prefix.
 		Bundle[] bundles = context.getBundles();
 		for (Bundle b : bundles) {
-			if (b.getState() == Bundle.ACTIVE) {
+			if (b.getState() == Bundle.ACTIVE && !b.equals(getBundle())) {
 				try {
 					IComActivator activator = BundleServiceUtil
 							.getBundleActivator(b);
