@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -121,19 +122,24 @@ public class WebBundleUtil extends BundleServiceUtil implements IFwkConstants {
 		// If the webbundle url like webbundle:// , FileLocator cann't find the
 		// real bundle file. We use Bundle.getLocation() at first.
 		File bundleFile = null;
-		URL loc = new URL(wabundle.getLocation());
-		if (loc.getProtocol().equals("file"))
-			bundleFile = new File(loc.getPath());
-		else if (loc.getProtocol().equals("webbundle")) {
-			// See OSGi Enterprise speci4.2 128.4.1
-			String p = loc.getPath();
-			try {
-				URL furl = new URL(p);
-				if (furl.getProtocol().equals("file"))
-					bundleFile = new File(furl.getPath());
-			} catch (Exception e) {
-			}
+		try {
+			// Sometime, the bundle.getLocation() not return right URL.
+			URL loc = new URL(URLDecoder
+					.decode(wabundle.getLocation(), "UTF-8"));
+			if (loc.getProtocol().equals("file"))
+				bundleFile = new File(loc.getPath());
+			else if (loc.getProtocol().equals("webbundle")) {
+				// See OSGi Enterprise speci4.2 128.4.1
+				String p = loc.getPath();
+				try {
+					URL furl = new URL(p);
+					if (furl.getProtocol().equals("file"))
+						bundleFile = new File(furl.getPath());
+				} catch (Exception e) {
+				}
 
+			}
+		} catch (Exception e) {
 		}
 
 		if (bundleFile == null) {
