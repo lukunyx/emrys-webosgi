@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.emrys.webosgi.feature_1.0.0.qualifier.jar" id="org.emrys.webosgi.feature" version="1.0.0.qualifier"/>
-   <feature url="features/org.emrys.p3rd.feature_1.0.0.qualifier.jar" id="org.emrys.p3rd.feature" version="1.0.0.qualifier"/>
-   <feature url="features/org.emrys.support.feature_1.0.0.qualifier.jar" id="org.emrys.support.feature" version="1.0.0.qualifier"/>
+   <feature url="features/org.emrys.webosgi.feature_1.0.0.qualifier.jar" id="org.emrys.webosgi.feature" version="1.0.0.qualifier">
+      <category name="org.emrys.webosgi.category"/>
+   </feature>
+   <feature url="features/org.emrys.p3rd.feature_1.0.0.qualifier.jar" id="org.emrys.p3rd.feature" version="1.0.0.qualifier">
+      <category name="org.emrys.p3rd.category"/>
+   </feature>
+   <feature url="features/org.emrys.support.feature_1.0.0.qualifier.jar" id="org.emrys.support.feature" version="1.0.0.qualifier">
+      <category name="org.emrys.p3rd.support"/>
+   </feature>
+   <category-def name="org.emrys.webosgi.category" label="WebOSGi Web Container"/>
+   <category-def name="org.emrys.p3rd.category" label="3rd JavaEE plugins"/>
+   <category-def name="org.emrys.p3rd.support" label="Development Support plugins"/>
 </site>
