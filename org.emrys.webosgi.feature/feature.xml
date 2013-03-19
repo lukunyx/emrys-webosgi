@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.emrys.webosgi.feature"
-      label="Web Container Feature"
+      label="Emrys - Web Container Feature"
       version="1.0.0.qualifier"
       provider-name="EMRYS">
 
