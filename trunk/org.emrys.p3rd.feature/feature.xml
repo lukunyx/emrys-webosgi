@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.emrys.p3rd.feature"
-      label="Emrys 3rd part plugins Feature"
+      label="Emrys - 3rd part plugins Feature"
       version="1.0.0.qualifier"
       provider-name="EMRYS">
 
