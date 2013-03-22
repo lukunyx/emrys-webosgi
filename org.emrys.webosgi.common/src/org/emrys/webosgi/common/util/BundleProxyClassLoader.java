@@ -142,7 +142,7 @@ public class BundleProxyClassLoader extends ClassLoader {
 	 * @param url
 	 * @return
 	 */
-	private URL resolveResource(URL originalUrl) {
+	protected URL resolveResource(URL originalUrl) {
 		if (originalUrl == null)
 			return null;
 		try {

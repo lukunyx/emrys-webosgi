@@ -18,6 +18,7 @@ import org.emrys.webosgi.common.util.BundleProxyClassLoader;
 import org.emrys.webosgi.common.util.FileUtil;
 import org.emrys.webosgi.core.FwkActivator;
 import org.emrys.webosgi.core.internal.FwkRuntime;
+import org.emrys.webosgi.core.service.IWABServletContext;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.Constants;
 
@@ -72,16 +73,16 @@ public class BundleJspClassLoader extends URLClassLoader {
 	private final File generatedTldJar;
 	private final Bundle bundle;
 
-	public BundleJspClassLoader(Bundle bundle,
+	public BundleJspClassLoader(IWABServletContext wabSerlvetCtx,
 			ClassLoader jspersParentClassloader) {
-		super(new URL[0], new BundledJeeContextClassLoader(bundle,
+		super(new URL[0], new BundledJeeContextClassLoader(wabSerlvetCtx,
 				new BundleProxyClassLoader(JASPERBUNDLE, null, null
 				/*
 				 * new JSPContextFinder (jspersParentClassloader == null ?
 				 * EMPTY_CLASSLOADER : jspersParentClassloader)
 				 */)));
 
-		this.bundle = bundle;
+		this.bundle = wabSerlvetCtx.getBundle();
 		// Add all dependencies jars' url to super URLClassLoader, for jasper
 		// jsp compiler will search them for tld files. We concentrate tld files
 		// in a temporarily jar to optimize performace.

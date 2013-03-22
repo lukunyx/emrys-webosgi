@@ -639,7 +639,7 @@ public class WabServletContext implements IWABServletContext {
 	}
 
 	public ClassLoader getWabClassLoader() {
-		return BundledClassLoaderFactory.getBundledJeeClassLoader(getBundle());
+		return BundledClassLoaderFactory.getBundledJeeClassLoader(this);
 	}
 
 	public boolean isJspResource(String path) {
