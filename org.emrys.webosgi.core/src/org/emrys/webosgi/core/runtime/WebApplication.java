@@ -175,6 +175,7 @@ public class WebApplication implements IWebApplication {
 									+ getWebContextPath() + "] published OK."));
 				} catch (Throwable t) {
 					// t.printStackTrace();
+					webContainer.unregServletContext(servletContext);
 					log(new Status(Status.ERROR, bundle.getSymbolicName(),
 							"Web Service in Web bundle:"
 									+ bundle.getSymbolicName() + " ["
@@ -207,10 +208,22 @@ public class WebApplication implements IWebApplication {
 	protected void active() throws ServiceInitException {
 		try {
 			getWebContainer().activeServletContext(servletContext);
+			initFilters();
 			initOnStartServlet();
 		} catch (Exception e) {
 			throw new ServiceInitException(new Status(Status.ERROR, bundle
 					.getSymbolicName(), "Web Service init failed.", e));
+		}
+	}
+
+	private void initFilters() throws ServletException {
+		for (FilterDelegate f : servletContext.getFilters()) {
+			try {
+				f.init(null);
+			} catch (Exception e) {
+				throw new ServletException("Init servlet filter:"
+						+ f.getFilterName() + " failed.", e);
+			}
 		}
 	}
 
@@ -580,8 +593,8 @@ public class WebApplication implements IWebApplication {
 			info.setRawURLPatterns(urlParttern);
 			info.setBundleContext(servletContext);
 			servletContext.getFilters().add(info);
-			// We init filter here before servelts.
-			info.init(null);
+			// Do not init filter, we init them later before servelts.
+			// info.init(null);
 		}
 	}
 
