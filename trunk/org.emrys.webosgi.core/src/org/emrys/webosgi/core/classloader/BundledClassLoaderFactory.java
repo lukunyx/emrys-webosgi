@@ -4,6 +4,7 @@ import java.net.URLClassLoader;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.emrys.webosgi.core.runtime.WabServletContext;
 import org.emrys.webosgi.core.service.IWABServletContext;
 import org.osgi.framework.Bundle;
 
@@ -27,11 +28,13 @@ public class BundledClassLoaderFactory {
 	 * @param bundle
 	 * @return
 	 */
-	public static ClassLoader getBundledJeeClassLoader(Bundle bundle) {
-		ClassLoader resLoader = wbCtxClassLoaders.get(bundle);
+	public static ClassLoader getBundledJeeClassLoader(
+			WabServletContext wabServletCtx) {
+		ClassLoader resLoader = wbCtxClassLoaders
+				.get(wabServletCtx.getBundle());
 		if (resLoader == null) {
-			resLoader = new BundledJeeContextClassLoader(bundle);
-			wbCtxClassLoaders.put(bundle, resLoader);
+			resLoader = new BundledJeeContextClassLoader(wabServletCtx);
+			wbCtxClassLoaders.put(wabServletCtx.getBundle(), resLoader);
 		}
 		return resLoader;
 	}
@@ -47,7 +50,7 @@ public class BundledClassLoaderFactory {
 		Bundle bundle = wabCtx.getBundle();
 		URLClassLoader resLoader = wbJspUrlClassLoaders.get(bundle);
 		if (resLoader == null) {
-			resLoader = new BundleJspClassLoader(bundle, wabCtx
+			resLoader = new BundleJspClassLoader(wabCtx, wabCtx
 					.getWabClassLoader());
 			wbJspUrlClassLoaders.put(bundle, resLoader);
 		}

@@ -7,10 +7,8 @@ import org.emrys.webosgi.core.service.IOSGiWebContainer;
 import org.emrys.webosgi.core.service.IWABServletContext;
 
 /**
- * 调用bundled Api的封装类，该类中会帮调用者用bundle上下文的classloader替换当前线程的上下文ClassLoader.
- * 比如在调用到某个Web
- * Bundle中的Servlet、Listener、Filter时，霄1�7要替换当前线程上下文ClassLoader，则可以使用此类来封装调用的方法
- * 〄1�7
+ * The helper class to run WAB codes in WAB Context. This runnable help to
+ * switch Thread Context ClassLoader and others context objects.
  * 
  * @author Leo Chang
  * @version 2011-4-6
@@ -30,7 +28,7 @@ public abstract class BundleContextRunnable implements Runnable {
 	private final boolean switchCtxCL;
 
 	/**
-	 * get execution result.
+	 * Get execution result.
 	 * 
 	 * @return
 	 */
@@ -55,6 +53,15 @@ public abstract class BundleContextRunnable implements Runnable {
 
 	public void setBundleCtx(IWABServletContext ctx) {
 		this.ctx = ctx;
+	}
+
+	/**
+	 * Get the WAB Context Class loader.
+	 * 
+	 * @return
+	 */
+	public ClassLoader getWabCtxClassLoader() {
+		return ctx.getWabClassLoader();
 	}
 
 	public final void run() {
@@ -104,9 +111,9 @@ public abstract class BundleContextRunnable implements Runnable {
 	}
 
 	/**
-	 * the executive work here.
+	 * The executive work here.
 	 * 
-	 * @return the result statuts.
+	 * @return the result status.
 	 */
 	protected abstract IStatus execute();
 }

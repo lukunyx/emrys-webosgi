@@ -1,10 +1,13 @@
 package org.emrys.webosgi.core.classloader;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.eclipse.osgi.framework.adaptor.BundleClassLoader;
 import org.emrys.webosgi.common.ComActivator;
 import org.emrys.webosgi.common.ComponentCore;
 import org.emrys.webosgi.common.util.BundleProxyClassLoader;
-import org.osgi.framework.Bundle;
+import org.emrys.webosgi.core.service.IWABServletContext;
 
 import sun.reflect.Reflection;
 
@@ -20,21 +23,39 @@ import sun.reflect.Reflection;
  * @version 2011-6-3
  */
 public class BundledJeeContextClassLoader extends BundleProxyClassLoader {
+	private static final String WAB_CLASSPATH_ROOT = "WEB-INF/classes/";
 	/**
 	 * Backing bundle's class loader
 	 */
 	private ClassLoader backingBundleCL;
+	private final IWABServletContext wabServletCtx;
 
 	/**
 	 * 
-	 * @param bundle
-	 *            the Bundle to load class and resource with at first.
+	 * @param wabServletCtx
+	 *            the WAB Servlet Context to load class and resource with at
+	 *            first.
 	 */
-	public BundledJeeContextClassLoader(Bundle bundle) {
+	public BundledJeeContextClassLoader(IWABServletContext wabServletCtx) {
 		// Use OSGi framework's Context CL as parent. This bundle's class
 		// loader's parent CL.
-		super(bundle, null, BundledJeeContextClassLoader.class.getClassLoader()
+		this(wabServletCtx, BundledJeeContextClassLoader.class.getClassLoader()
 				.getParent());
+	}
+
+	/**
+	 * @param wabServletCtx
+	 *            WAB bundle servlet context to load class and resource with at
+	 *            first.
+	 * @param parentCL
+	 *            parent Class Loader if failed load class and resource form
+	 *            Bundle.
+	 */
+	public BundledJeeContextClassLoader(IWABServletContext wabServletCtx,
+			ClassLoader parentCL) {
+		super(wabServletCtx.getBundle(), null, parentCL);
+		this.wabServletCtx = wabServletCtx;
+		// The OSGi specied WAB may have no Web ComActivator.
 		ComActivator backingBundleActivator = ComponentCore.getInstance()
 				.getBundleActivator(getBundle().getBundleId());
 		if (backingBundleActivator != null)
@@ -42,20 +63,29 @@ public class BundledJeeContextClassLoader extends BundleProxyClassLoader {
 					.getClassLoader();
 	}
 
-	/**
-	 * @param bundle
-	 *            bundle the Bundle to load class and resource with at first.
-	 * @param parentCL
-	 *            parent Class Loader if failed load class and resource form
-	 *            Bundle.
-	 */
-	public BundledJeeContextClassLoader(Bundle bundle, ClassLoader parentCL) {
-		super(bundle, null, parentCL);
-		ComActivator backingBundleActivator = ComponentCore.getInstance()
-				.getBundleActivator(getBundle().getBundleId());
-		if (backingBundleActivator != null)
-			backingBundleCL = backingBundleActivator.getClass()
-					.getClassLoader();
+	@Override
+	protected URL findResource(String name) {
+		// Because the WAB Classes Root has been set as Bundle-ClassPath header,
+		// if the name of class-path resource contains "WEB-INF/classes" use the
+		// segments behind. This check may solve some problem when Spring try to
+		// load class-path configure file. And if some WAB has many class-path
+		// resources in "WEB-INF/classes" to load, it's take a really long time
+		// to obtain the resource by invoke method Bundle.getResource(name).
+		// Here we search for the resource in "WEB-INF/classes" directory at
+		// first.
+		int i = 0;
+		if ((i = name.indexOf(WAB_CLASSPATH_ROOT)) > -1) {
+			try {
+				URL url = wabServletCtx.getResource(name.substring(i));
+				if (url != null)
+					return url;
+			} catch (MalformedURLException e) {
+			}
+
+			name = name.substring(i + WAB_CLASSPATH_ROOT.length());
+		}
+
+		return super.findResource(name);
 	}
 
 	@Override
