@@ -60,7 +60,7 @@ public class BundledClassLoaderFactory {
 		Bundle bundle = wabCtx.getBundle();
 		URLClassLoader resLoader = wbJspUrlClassLoaders.get(bundle);
 		if (resLoader == null) {
-			resLoader = new BundleJspClassLoader(wabCtx);
+			resLoader = new JspContextClassLoader(wabCtx);
 			wbJspUrlClassLoaders.put(bundle, resLoader);
 		}
 		return resLoader;

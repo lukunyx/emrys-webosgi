@@ -144,7 +144,7 @@ public class WabBundleClassLoader extends BundleProxyClassLoader {
 					continue;
 
 				// If this call was load by BundleJspClassLoader, skip.
-				if (stackClassName.equals(BundleJspClassLoader.class.getName()))
+				if (stackClassName.equals(JspContextClassLoader.class.getName()))
 					return null;
 
 				// NOTE: sun.reflect.Reflection.getCallerClass() is protected
