@@ -29,7 +29,7 @@ import org.osgi.framework.Constants;
  * @author Leo Chang
  * @version 2011-1-13
  */
-public class BundleJspClassLoader extends URLClassLoader {
+public class JspContextClassLoader extends URLClassLoader {
 	/**
 	 * Apache Jasper's Bundle
 	 */
@@ -37,7 +37,7 @@ public class BundleJspClassLoader extends URLClassLoader {
 	/**
 	 * the parent class loader of this class
 	 */
-	private static final ClassLoader PARENT = BundleJspClassLoader.class
+	private static final ClassLoader PARENT = JspContextClassLoader.class
 			.getClassLoader().getParent();
 	/**
 	 * Java package prefix.
@@ -47,7 +47,7 @@ public class BundleJspClassLoader extends URLClassLoader {
 	private final File generatedTldJar;
 	private final Bundle bundle;
 
-	public BundleJspClassLoader(IWABServletContext wabSerlvetCtx) {
+	public JspContextClassLoader(IWABServletContext wabSerlvetCtx) {
 		super(new URL[0], new BundleProxyClassLoader(JASPERBUNDLE,
 				wabSerlvetCtx.getWabClassLoader(), null));
 
