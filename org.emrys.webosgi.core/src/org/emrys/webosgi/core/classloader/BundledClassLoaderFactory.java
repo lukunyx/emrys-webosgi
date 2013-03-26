@@ -1,5 +1,6 @@
 package org.emrys.webosgi.core.classloader;
 
+import java.io.File;
 import java.net.URLClassLoader;
 import java.util.Hashtable;
 import java.util.Map;
@@ -30,13 +31,22 @@ public class BundledClassLoaderFactory {
 	 */
 	public static ClassLoader getBundledJeeClassLoader(
 			WabServletContext wabServletCtx) {
-		ClassLoader resLoader = wbCtxClassLoaders
-				.get(wabServletCtx.getBundle());
-		if (resLoader == null) {
-			resLoader = new BundledJeeContextClassLoader(wabServletCtx);
-			wbCtxClassLoaders.put(wabServletCtx.getBundle(), resLoader);
+		ClassLoader wabClassLoader = wbCtxClassLoaders.get(wabServletCtx
+				.getBundle());
+		if (wabClassLoader == null) {
+			// If the WAB has any $WebContent$/WEB-INF/lib/*.jar
+			File webContentRoot = wabServletCtx.getWebContentRoot();
+			if (webContentRoot != null) {
+				File libsDir = new File(webContentRoot, "WEB-INF/lib");
+				if (libsDir.exists() && libsDir.list().length > 0)
+					wabClassLoader = new WebAppClassLoader(wabServletCtx);
+			}
+
+			if (wabClassLoader == null)
+				wabClassLoader = new WabBundleClassLoader(wabServletCtx);
+			wbCtxClassLoaders.put(wabServletCtx.getBundle(), wabClassLoader);
 		}
-		return resLoader;
+		return wabClassLoader;
 	}
 
 	/**
@@ -50,8 +60,7 @@ public class BundledClassLoaderFactory {
 		Bundle bundle = wabCtx.getBundle();
 		URLClassLoader resLoader = wbJspUrlClassLoaders.get(bundle);
 		if (resLoader == null) {
-			resLoader = new BundleJspClassLoader(wabCtx, wabCtx
-					.getWabClassLoader());
+			resLoader = new BundleJspClassLoader(wabCtx);
 			wbJspUrlClassLoaders.put(bundle, resLoader);
 		}
 		return resLoader;

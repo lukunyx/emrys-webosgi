@@ -22,8 +22,8 @@ import sun.reflect.Reflection;
  * @author Leo Chang
  * @version 2011-6-3
  */
-public class BundledJeeContextClassLoader extends BundleProxyClassLoader {
-	private static final String WAB_CLASSPATH_ROOT = "WEB-INF/classes/";
+public class WabBundleClassLoader extends BundleProxyClassLoader {
+	static final String WAB_CLASSPATH_ROOT = "WEB-INF/classes/";
 	/**
 	 * Backing bundle's class loader
 	 */
@@ -36,10 +36,10 @@ public class BundledJeeContextClassLoader extends BundleProxyClassLoader {
 	 *            the WAB Servlet Context to load class and resource with at
 	 *            first.
 	 */
-	public BundledJeeContextClassLoader(IWABServletContext wabServletCtx) {
+	public WabBundleClassLoader(IWABServletContext wabServletCtx) {
 		// Use OSGi framework's Context CL as parent. This bundle's class
 		// loader's parent CL.
-		this(wabServletCtx, BundledJeeContextClassLoader.class.getClassLoader()
+		this(wabServletCtx, WabBundleClassLoader.class.getClassLoader()
 				.getParent());
 	}
 
@@ -51,7 +51,7 @@ public class BundledJeeContextClassLoader extends BundleProxyClassLoader {
 	 *            parent Class Loader if failed load class and resource form
 	 *            Bundle.
 	 */
-	public BundledJeeContextClassLoader(IWABServletContext wabServletCtx,
+	public WabBundleClassLoader(IWABServletContext wabServletCtx,
 			ClassLoader parentCL) {
 		super(wabServletCtx.getBundle(), null, parentCL);
 		this.wabServletCtx = wabServletCtx;

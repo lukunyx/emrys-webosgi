@@ -129,7 +129,7 @@ public class FilterDelegate extends AbstMultiInstUrlMapObject implements Filter 
 				// Lazy load filter class.
 				if (filterBase.filter == null) {
 					try {
-						Class clazz = getBundleContext().getBundle().loadClass(
+						Class clazz = getWabCtxClassLoader().loadClass(
 								filterBase.clazzName);
 						filterBase.filter = (Filter) clazz.newInstance();
 					} catch (Exception e) {

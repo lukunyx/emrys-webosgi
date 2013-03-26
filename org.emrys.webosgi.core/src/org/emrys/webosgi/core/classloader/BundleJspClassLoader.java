@@ -23,7 +23,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.Constants;
 
 /**
- * simulate the class org.eclipse.equinox.internal.jsp.jasper.JspClassLoader to
+ * Simulate the class org.eclipse.equinox.internal.jsp.jasper.JspClassLoader to
  * implements the web bundle class loader.
  * 
  * @author Leo Chang
@@ -43,44 +43,13 @@ public class BundleJspClassLoader extends URLClassLoader {
 	 * Java package prefix.
 	 */
 	private static final String JAVA_PACKAGE = "java."; //$NON-NLS-1$
-	/**
-	 * Define a empty class loader.
-	 */
-	private static final ClassLoader EMPTY_CLASSLOADER = new ClassLoader() {
-		@Override
-		public URL getResource(String name) {
-			return null;
-		}
 
-		@Override
-		public Enumeration findResources(String name) throws IOException {
-			return new Enumeration() {
-				public boolean hasMoreElements() {
-					return false;
-				}
-
-				public Object nextElement() {
-					return null;
-				}
-			};
-		}
-
-		@Override
-		public Class loadClass(String name) throws ClassNotFoundException {
-			throw new ClassNotFoundException(name);
-		}
-	};
 	private final File generatedTldJar;
 	private final Bundle bundle;
 
-	public BundleJspClassLoader(IWABServletContext wabSerlvetCtx,
-			ClassLoader jspersParentClassloader) {
-		super(new URL[0], new BundledJeeContextClassLoader(wabSerlvetCtx,
-				new BundleProxyClassLoader(JASPERBUNDLE, null, null
-				/*
-				 * new JSPContextFinder (jspersParentClassloader == null ?
-				 * EMPTY_CLASSLOADER : jspersParentClassloader)
-				 */)));
+	public BundleJspClassLoader(IWABServletContext wabSerlvetCtx) {
+		super(new URL[0], new BundleProxyClassLoader(JASPERBUNDLE,
+				wabSerlvetCtx.getWabClassLoader(), null));
 
 		this.bundle = wabSerlvetCtx.getBundle();
 		// Add all dependencies jars' url to super URLClassLoader, for jasper
