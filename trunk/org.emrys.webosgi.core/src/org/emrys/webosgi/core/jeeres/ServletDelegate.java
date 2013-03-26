@@ -151,8 +151,8 @@ public class ServletDelegate extends AbstMultiInstUrlMapObject implements
 					if (servlet != null
 							|| (className != null && className.length() > 0)) {
 						if (servlet == null) {
-							Class clazz = getBundleContext().getBundle()
-									.loadClass(className);
+							Class clazz = getWabCtxClassLoader().loadClass(
+									className);
 							servlet = (Servlet) clazz.newInstance();
 						}
 						if (servlet.getServletConfig() == null)

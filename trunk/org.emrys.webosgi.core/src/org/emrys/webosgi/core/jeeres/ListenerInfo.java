@@ -16,7 +16,7 @@ public class ListenerInfo extends AbstractBundledServletObject {
 	public EventListener getListener() throws ServletException {
 		if (listener == null) {
 			try {
-				Class clazz = getBundleContext().getBundle().loadClass(
+				Class clazz = getBundleContext().getWabClassLoader().loadClass(
 						className);
 				listener = (EventListener) clazz.newInstance();
 			} catch (Exception e) {
