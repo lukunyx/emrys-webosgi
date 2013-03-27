@@ -25,8 +25,10 @@ import org.emrys.webosgi.launcher.internal.adapter.IServletObjectWrapper;
  * 
  * @author Leo Chang
  */
-public class HttpServletResponseWrapper implements IBuffferdServletResponse,
+public class HttpServletResponseWrapper implements HttpServletResponse,
 		IServletObjectWrapper {
+	public static final int RESULT_CANCEL = 5000;
+
 	HttpServletResponseAdapter wrappedResponseAdapter;
 	private int state = HttpServletResponse.SC_OK;
 	private String errMsg;
@@ -38,7 +40,8 @@ public class HttpServletResponseWrapper implements IBuffferdServletResponse,
 	private ServletOutputStream outputStreamWrapper;
 	private boolean isInclude;
 	private PrintWriter printWriter;
-	private boolean statusCommited;
+	private boolean wrapperCommited;
+	private Boolean isWriterObtained;
 
 	private static Set<HttpServletResponseWrapper> wrappers = new HashSet<HttpServletResponseWrapper>();
 
@@ -181,46 +184,59 @@ public class HttpServletResponseWrapper implements IBuffferdServletResponse,
 	}
 
 	public void flushBuffer() throws IOException {
+		// According to Servlet Spec 2.5, here we no need to check if the
+		// Response committed. We do nothing in this case.
+		/*if (isCommitted())
+			throw new IllegalStateException(
+					"This servlet response has been commited.");*/
+
+		flushBufferInternal();
+	}
+
+	public void flushBufferInternal() throws IOException {
+		// If this response is dispatched in include mode or the external
+		// Response has commited, do nothing.
+		if (isInclude || (isCommitted() && !isCommittedInternal()))
+			return;
+
 		if (wrappedResponse != null) {
 			wrappedResponse.flushBuffer();
 		} else {
-			// because we wrapped the parent servlet writer with bufferable
+			// because we wrapped the parent Servlet writer with buffered
 			// PrintWriter, we need to flush content.
 			this.flushBufferStatus();
-			this.getWriter().flush();
+			if (isWriterObtained != null && isWriterObtained)
+				this.getWriter().flush();
+			else
+				this.getOutputStream().flush();
 			// this.getOutputStream().flush();
 			// wrappedResponseAdapter.flushBuffer();
 		}
+		setCommittedInternal(true);
 	}
 
-	public void flushBufferStatus() throws IOException {
-		if (statusCommited)
-			return;
-
+	protected void flushBufferStatus() throws IOException {
 		if (wrappedResponse != null) {
 			throw new IOException(
 					"This method not allowed. Use flushBuffer() method for instead.");
 		}
 
-		statusCommited = true;
-		// If this request is dispatched and in include mode, the response must
-		// has been commited. If so, we cann't output status again.
-		if (!isInclude /* && !isCommitted() */) {
-			if (state == SC_MOVED_TEMPORARILY) {
-				// flush redirect status
-				wrappedResponseAdapter.sendRedirect(redirectLocation);
-			} else if (state != SC_OK) {
-				if (errMsg != null)
-					wrappedResponseAdapter.sendError(state, errMsg);
-				else {
-					wrappedResponseAdapter.setStatus(state);
-				}
-			} else {
-				wrappedResponseAdapter.setStatus(SC_OK);
-				// Do not flush content, coz we do it at the service's end by
-				// call flushBuffer() method later.
-				// wrappedResponseAdapter.flushBuffer();
+		// If this request is dispatched and in include mode, not do any status
+		// output. Let the first request process phase to handle.
+		if (state == SC_MOVED_TEMPORARILY) {
+			// flush redirect status
+			wrappedResponseAdapter.sendRedirect(redirectLocation);
+		} else if (state != SC_OK) {
+			if (errMsg != null)
+				wrappedResponseAdapter.sendError(state, errMsg);
+			else {
+				wrappedResponseAdapter.setStatus(state);
 			}
+		} else {
+			wrappedResponseAdapter.setStatus(SC_OK);
+			// Do not flush content, because we do it at the service's end
+			// by call flushBuffer() method later.
+			// wrappedResponseAdapter.flushBuffer();
 		}
 	}
 
@@ -252,7 +268,7 @@ public class HttpServletResponseWrapper implements IBuffferdServletResponse,
 			return wrappedResponseAdapter.getLocale();
 	}
 
-	public ServletOutputStream getOutputStream() throws IOException {
+	protected ServletOutputStream getOutputStreamInternal() throws IOException {
 		if (wrappedResponse != null)
 			return wrappedResponse.getOutputStream();
 		else {
@@ -263,23 +279,53 @@ public class HttpServletResponseWrapper implements IBuffferdServletResponse,
 		}
 	}
 
+	public ServletOutputStream getOutputStream() throws IOException {
+		// Either getWriter() or getOutputStream() may be called to write
+		// the body, not both.
+		if (isWriterObtained != null && isWriterObtained)
+			throw new IllegalStateException(
+					"Either getWriter() or getOutputStream() can be invoked.");
+		else
+			isWriterObtained = false;
+
+		return getOutputStreamInternal();
+	}
+
 	public PrintWriter getWriter() throws IOException {
+		// Either getWriter() or getOutputStream() may be called to write
+		// the body, not both.
+		if (isWriterObtained != null && !isWriterObtained)
+			throw new IllegalStateException(
+					"Either getWriter() or getOutputStream() can be invoked.");
+		else
+			isWriterObtained = true;
+
 		if (wrappedResponse != null)
 			return wrappedResponse.getWriter();
 		else {
 			if (printWriter == null) {
-				// printWriter= wrappedResponseAdapter.getWriter();
-				// Create a Auto-Flushing PrintWrite with response's charset.
-				// NOTE: the auto flush only effective to the newLine) and
-				// format() method. We need to flush after the response used.
+				// Use wrapped Response OutputStream to construct a no
+				// auto-flush writer. We expect the writer to flush by user's
+				// invoke or at last by framework.
 				printWriter = new PrintWriter(new OutputStreamWriter(
-						getOutputStream(), getCharacterEncoding()), true);
+						getOutputStreamInternal(), getCharacterEncoding()),
+						false);
 			}
 			return printWriter;
 		}
 	}
 
+	protected void setCommittedInternal(boolean committed) {
+		wrapperCommited = committed;
+	}
+
+	public boolean isCommittedInternal() {
+		return wrapperCommited;
+	}
+
 	public boolean isCommitted() {
+		if (isCommittedInternal())
+			return true;
 		if (wrappedResponse != null)
 			return wrappedResponse.isCommitted();
 		else
@@ -322,21 +368,33 @@ public class HttpServletResponseWrapper implements IBuffferdServletResponse,
 		this.isInclude = isInclude;
 	}
 
-	public void sendError(int sc, String msg) throws IOException {
-		if (wrappedResponse != null)
-			wrappedResponse.sendError(sc, msg);
-
-		setStatus(sc, msg);
+	public void sendError(int sc) throws IOException {
+		// We mark the not null (Even empty) message string as a error status.
+		// See flush status method.
+		sendError(sc, "");
 	}
 
-	public void sendError(int sc) throws IOException {
-		if (wrappedResponse != null)
-			wrappedResponse.sendError(sc);
+	public void sendError(int sc, String msg) throws IOException {
+		if (isCommitted())
+			throw new IllegalStateException(
+					"The servlet response has been committed.");
 
-		setStatus(sc);
+		if (wrappedResponse != null)
+			wrappedResponse.sendError(sc, msg);
+		// If the status is RESULT_CANCEL, we regarded it a internal mark, not a
+		// error status.
+		if (RESULT_CANCEL == sc) {
+			setStatus(sc);
+		} else {
+			setStatus(sc, msg);
+			setCommittedInternal(true);
+		}
 	}
 
 	public void sendRedirect(String location) throws IOException {
+		if (isCommitted())
+			throw new IllegalStateException(
+					"This servlet response has been commited.");
 		if (wrappedResponse != null)
 			wrappedResponse.sendRedirect(location);
 		else {
@@ -347,6 +405,7 @@ public class HttpServletResponseWrapper implements IBuffferdServletResponse,
 			// SC_MOVED_PERMANENTLY 301
 			setStatus(SC_MOVED_TEMPORARILY);
 		}
+		setCommittedInternal(true);
 	}
 
 	public void setBufferSize(int size) {
@@ -413,9 +472,8 @@ public class HttpServletResponseWrapper implements IBuffferdServletResponse,
 	}
 
 	public void setStatus(int sc) {
-		if (statusCommited)
-			throw new IllegalStateException(
-					"Response has been commited. Status cann't be modified.");
+		// According to Servlet spec 2.5, here we not need to check if response
+		// committed.
 		if (wrappedResponse != null)
 			wrappedResponse.setStatus(sc);
 		state = sc;
@@ -441,4 +499,5 @@ public class HttpServletResponseWrapper implements IBuffferdServletResponse,
 	public HttpServletResponseWrapper getTopWrapper() {
 		return topWrapper;
 	}
+
 }

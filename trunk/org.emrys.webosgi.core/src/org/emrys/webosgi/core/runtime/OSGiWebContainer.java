@@ -399,11 +399,12 @@ public class OSGiWebContainer extends GenericServlet implements
 		} finally {
 			HttpServletResponseWrapper topResp = (HttpServletResponseWrapper) this
 					.getReqThreadVariants().get(THREAD_V_RESPONSE);
-			BundledHttpServletRequestWrapper topRep = (BundledHttpServletRequestWrapper) this
+			BundledHttpServletRequestWrapper topReq = (BundledHttpServletRequestWrapper) this
 					.getReqThreadVariants().get(THREAD_V_REQUEST);
-			if (!exceptionThrowed) {
+			// If not any exception throwed and not dispatched, do flush buffer.
+			if (!exceptionThrowed && !topReq.isDispatched()) {
 				try {
-					topResp.flushBuffer();
+					topResp.flushBufferInternal();
 				} catch (Exception e) {
 					String msg = e.getMessage();
 					// If http socket reset by client, a IOException will be

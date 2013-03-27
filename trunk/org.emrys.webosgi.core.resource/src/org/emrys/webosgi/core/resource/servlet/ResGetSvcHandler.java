@@ -37,7 +37,6 @@ import org.emrys.webosgi.core.handlers.IFwkHandlerChain;
 import org.emrys.webosgi.core.internal.FwkRuntime;
 import org.emrys.webosgi.core.jeewrappers.BundledHttpServletRequestWrapper;
 import org.emrys.webosgi.core.jeewrappers.HttpServletResponseWrapper;
-import org.emrys.webosgi.core.jeewrappers.IBuffferdServletResponse;
 import org.emrys.webosgi.core.jsp.JspServletPool;
 import org.emrys.webosgi.core.jsp.OSGIJspServlet;
 import org.emrys.webosgi.core.resource.ResroucesCom;
@@ -190,7 +189,7 @@ public class ResGetSvcHandler extends AbstractFwkReqeustHandler {
 			// Do resource get service.
 			service(request, response);
 			int state = response.getState();
-			if (state == IBuffferdServletResponse.RESULT_CANCEL) {
+			if (state == HttpServletResponseWrapper.RESULT_CANCEL) {
 				// Reset the state. Note: not invoke reset, this will reset all
 				// former cookie and headers.
 				if (!request.isInclude())
@@ -238,7 +237,7 @@ public class ResGetSvcHandler extends AbstractFwkReqeustHandler {
 		} else {
 			// Case POST, PUT, DELETE method, skip resource search and return
 			// RESULT_CANCEL status.
-			resp.sendError(IBuffferdServletResponse.RESULT_CANCEL);
+			resp.sendError(HttpServletResponseWrapper.RESULT_CANCEL);
 		}
 	}
 
@@ -308,7 +307,7 @@ public class ResGetSvcHandler extends AbstractFwkReqeustHandler {
 		try {
 			String originalPath = req.getServletPath();
 			if (originalPath.length() == 0)
-				resp.sendError(IBuffferdServletResponse.RESULT_CANCEL);
+				resp.sendError(HttpServletResponseWrapper.RESULT_CANCEL);
 
 			// If the first segment of req path is not Web Bundle's urlPattern,
 			// add the host bundle's urlPattern before it.
@@ -493,7 +492,7 @@ public class ResGetSvcHandler extends AbstractFwkReqeustHandler {
 								// Send the 404 status
 								resp
 										.sendError(
-												IBuffferdServletResponse.SC_UNAUTHORIZED,
+												HttpServletResponseWrapper.SC_UNAUTHORIZED,
 												"not found resource for path:"
 														+ req.getRequestURI());
 								return;
@@ -563,7 +562,7 @@ public class ResGetSvcHandler extends AbstractFwkReqeustHandler {
 
 			// Send the customized CANCEL status marking not any resource can be
 			// found and service be Canceled.
-			resp.sendError(IBuffferdServletResponse.RESULT_CANCEL);
+			resp.sendError(HttpServletResponseWrapper.RESULT_CANCEL);
 		} finally {
 			// delete created folder report file if any.
 			File tmpFile = (File) threadScope.get().get(
