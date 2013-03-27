@@ -1,8 +1,6 @@
 package org.emrys.webosgi.core.jeewrappers;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletOutputStream;
 
@@ -11,9 +9,9 @@ import org.emrys.webosgi.launcher.internal.adapter.ServletOutputStreamAdapter;
 
 /**
  * ServletOutputStream Wrapper class not buffering the data, but directly write
- * inot the original output stream to optimize performance. Before the firest
- * write operation, we need to flush the buffered response state. After the
- * state flush operation, all modification of Response Status will be invalid
+ * into the original output stream to optimize performance. Before the flush
+ * operation, we need to flush the buffered response state. After the state
+ * flush operation, all modification of Response Status will be invalid
  * according to the Java EE standard.
  * 
  * @author Leo Chang
@@ -21,32 +19,14 @@ import org.emrys.webosgi.launcher.internal.adapter.ServletOutputStreamAdapter;
  */
 public class ServletOutputStreamWrapper extends ServletOutputStream implements
 		IServletObjectWrapper {
-	private static List<ServletOutputStreamWrapper> wrappers = new ArrayList<ServletOutputStreamWrapper>();
 	private final ServletOutputStreamAdapter wrappedServletOutputStream;
 	private final HttpServletResponseWrapper response;
+	private boolean responseStatusFlushed;
 
 	public ServletOutputStreamWrapper(ServletOutputStreamAdapter out,
 			HttpServletResponseWrapper responseWrapper) {
 		this.wrappedServletOutputStream = out;
 		this.response = responseWrapper;
-	}
-
-	private boolean isResponseStatusBufferCommitted;
-
-	public boolean isDataCommitted() {
-		return isResponseStatusBufferCommitted;
-	}
-
-	@Override
-	public void write(int b) throws IOException {
-		// Write data into original Servlet Response OutputStream will cause the
-		// commit stata change, so before this, we need to flush the buffered
-		// state of our Response Wrapper.
-		if (!isResponseStatusBufferCommitted) {
-			isResponseStatusBufferCommitted = true;
-			response.flushBufferStatus();
-		}
-		wrappedServletOutputStream.write(b);
 	}
 
 	@Override
@@ -57,11 +37,6 @@ public class ServletOutputStreamWrapper extends ServletOutputStream implements
 	@Override
 	public boolean equals(Object obj) {
 		return wrappedServletOutputStream.equals(obj);
-	}
-
-	@Override
-	public void flush() throws IOException {
-		wrappedServletOutputStream.flush();
 	}
 
 	public Object getOriginalObject() {
@@ -154,20 +129,43 @@ public class ServletOutputStreamWrapper extends ServletOutputStream implements
 	}
 
 	@Override
+	public void flush() throws IOException {
+		flushResponseWrapperStatus();
+		wrappedServletOutputStream.flush();
+	}
+
+	@Override
 	public void write(byte[] b, int off, int len) throws IOException {
-		if (!isResponseStatusBufferCommitted) {
-			isResponseStatusBufferCommitted = true;
-			response.flushBufferStatus();
-		}
+		flushResponseWrapperStatus();
 		wrappedServletOutputStream.write(b, off, len);
 	}
 
 	@Override
 	public void write(byte[] b) throws IOException {
-		if (!isResponseStatusBufferCommitted) {
-			isResponseStatusBufferCommitted = true;
-			response.flushBufferStatus();
-		}
+		flushResponseWrapperStatus();
 		wrappedServletOutputStream.write(b);
+	}
+
+	@Override
+	public void write(int b) throws IOException {
+		flushResponseWrapperStatus();
+		wrappedServletOutputStream.write(b);
+	}
+
+	/**
+	 * Before write or flush External Response buffer, flush ours buffered
+	 * status at first.
+	 * 
+	 * @throws IOException
+	 */
+	protected void flushResponseWrapperStatus() throws IOException {
+		if (!responseStatusFlushed) {
+			responseStatusFlushed = true;
+			response.flushBufferStatus();
+			// Set the response's wrapper as committed. and it
+			// wont allow any invoke to the wrapper's some methods like
+			// sendError() and sendRedirect();
+			response.setCommittedInternal(true);
+		}
 	}
 }

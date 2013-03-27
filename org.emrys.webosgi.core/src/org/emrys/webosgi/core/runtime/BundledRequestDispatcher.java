@@ -22,7 +22,7 @@ import org.emrys.webosgi.core.service.IOSGiWebContainer;
  */
 public class BundledRequestDispatcher implements RequestDispatcher {
 	private final String webCtxPath;
-	private final IOSGiWebContainer jeeContainerSVC;
+	private final IOSGiWebContainer webContainer;
 	private String targetPath;
 	private Object include_context_path;
 	private Object include_servlet_path;
@@ -34,11 +34,14 @@ public class BundledRequestDispatcher implements RequestDispatcher {
 	public BundledRequestDispatcher(String wabCtxPath, String path) {
 		this.webCtxPath = wabCtxPath;
 		this.targetPath = path;
-		jeeContainerSVC = FwkRuntime.getInstance().getWebContainer();
+		webContainer = FwkRuntime.getInstance().getWebContainer();
 	}
 
 	public void forward(ServletRequest request, ServletResponse response)
 			throws ServletException, IOException {
+		if (response.isCommitted())
+			throw new IllegalStateException(
+					"This servlet response has been committed.");
 		service(request, response, false);
 	}
 
@@ -67,7 +70,7 @@ public class BundledRequestDispatcher implements RequestDispatcher {
 	 */
 	private void service(ServletRequest request, ServletResponse response,
 			boolean isInclude) throws ServletException, IOException {
-		BundledHttpServletRequestWrapper topRequest = (BundledHttpServletRequestWrapper) jeeContainerSVC
+		BundledHttpServletRequestWrapper topRequest = (BundledHttpServletRequestWrapper) webContainer
 				.getReqThreadVariants().get(OSGiWebContainer.THREAD_V_REQUEST);
 
 		// Try to wrapper the given request and response.
@@ -181,7 +184,7 @@ public class BundledRequestDispatcher implements RequestDispatcher {
 			}
 
 			// rewire to JEE Container.
-			jeeContainerSVC.service(reqWrapper, respWrapper);
+			webContainer.service(reqWrapper, respWrapper);
 		} finally {
 			// reset the include attributes at last.
 			if (!doInternalFilter && isInclude
