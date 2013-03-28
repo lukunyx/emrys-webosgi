@@ -653,7 +653,7 @@ public final class FwkRuntime implements IFwkRuntime {
 
 				// Wait for the app complete in timeout.
 				int interval = 0;
-				while (isAppDynaStarting(webApp, false) && interval < 100000) {
+				while (isAppDynaStarting(webApp, false) && interval < 600000) {
 					interval += 25;
 					Thread.sleep(25);
 				}
