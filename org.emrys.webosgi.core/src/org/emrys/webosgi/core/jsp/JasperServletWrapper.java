@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.Enumeration;
 import java.util.Set;
 
@@ -21,7 +20,7 @@ import javax.servlet.jsp.JspFactory;
 
 import org.apache.jasper.compiler.JspRuntimeContext;
 import org.apache.jasper.runtime.JspFactoryImpl;
-import org.emrys.webosgi.core.classloader.BundledClassLoaderFactory;
+import org.emrys.webosgi.core.classloader.WabClassLoaderFactory;
 import org.emrys.webosgi.core.service.IWABServletContext;
 
 /**
@@ -31,7 +30,7 @@ import org.emrys.webosgi.core.service.IWABServletContext;
  * @author Leo Chang
  * @version 2011-1-12
  */
-public class OSGIJspServlet extends HttpServlet {
+public class JasperServletWrapper extends HttpServlet {
 	private static final long serialVersionUID = -3110476909139807652L;
 	/**
 	 * Wrappred jasper servlet.
@@ -44,13 +43,12 @@ public class OSGIJspServlet extends HttpServlet {
 	/**
 	 * URL ClassLoader for jsp Serlvet
 	 */
-	private final URLClassLoader jspLoader;
+	private final ClassLoader jspLoader;
 	private static JspFactory jspFactoryIns;
 
-	public OSGIJspServlet(IWABServletContext wabCtx) {
+	public JasperServletWrapper(IWABServletContext wabCtx) {
 		this.wabCtx = wabCtx;
-		jspLoader = BundledClassLoaderFactory
-				.getBundledJspUrlClassLoader(wabCtx);
+		jspLoader = WabClassLoaderFactory.getWabClassLoader(wabCtx);
 	}
 
 	@Override

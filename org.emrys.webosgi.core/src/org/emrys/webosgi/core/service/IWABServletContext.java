@@ -1,5 +1,6 @@
 package org.emrys.webosgi.core.service;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,6 @@ import org.emrys.webosgi.core.jeeres.ListenerInfo;
 import org.emrys.webosgi.core.jeeres.ServletDelegate;
 import org.emrys.webosgi.core.jeeres.TaglibInfo;
 import org.osgi.framework.Bundle;
-
 
 /**
  * Servlet context Of web application. This interface derived from standard
@@ -182,4 +182,12 @@ public interface IWABServletContext extends ServletContext {
 	 * @return
 	 */
 	IWebApplication getWebApplication();
+
+	/**
+	 * Get the resolved Web Content root directory. If this Wab has not
+	 * WebContent, return null.
+	 * 
+	 * @return
+	 */
+	File getWebContentRoot();
 }

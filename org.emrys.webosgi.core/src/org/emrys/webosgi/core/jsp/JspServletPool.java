@@ -20,40 +20,40 @@ import org.osgi.framework.Bundle;
  * @version 2011-1-13
  */
 public class JspServletPool {
-	public static Map<Bundle, OSGIJspServlet> buffers = new Hashtable<Bundle, OSGIJspServlet>();
+	public static Map<Bundle, JasperServletWrapper> buffers = new Hashtable<Bundle, JasperServletWrapper>();
 
-	public static OSGIJspServlet getInstance(IWABServletContext wabCtx)
+	public static JasperServletWrapper getInstance(IWABServletContext wabCtx)
 			throws ServletException {
 		Bundle bundle = wabCtx.getBundle();
 		// String webContentPath = WebBundleUtil.findWebContentPath(bundle);
-		OSGIJspServlet result = buffers.get(bundle);
+		JasperServletWrapper result = buffers.get(bundle);
 		if (result != null)
 			return result;
 
-		result = new OSGIJspServlet(wabCtx);
+		result = new JasperServletWrapper(wabCtx);
 		initJspServlet(wabCtx, result);
 		buffers.put(bundle, result);
 		return result;
 	}
 
 	public static void desryJspServlet(Bundle bundle) {
-		OSGIJspServlet result = buffers.remove(bundle);
+		JasperServletWrapper result = buffers.remove(bundle);
 		if (result != null)
 			result.destroy();
 	}
 
 	public static void destroyAllServlets() {
-		Iterator<Entry<Bundle, OSGIJspServlet>> eit = buffers.entrySet()
+		Iterator<Entry<Bundle, JasperServletWrapper>> eit = buffers.entrySet()
 				.iterator();
 		while (eit.hasNext()) {
-			Entry<Bundle, OSGIJspServlet> entry = eit.next();
+			Entry<Bundle, JasperServletWrapper> entry = eit.next();
 			entry.getValue().destroy();
 			eit.remove();
 		}
 	}
 
 	private static void initJspServlet(IWABServletContext wabCtx,
-			OSGIJspServlet result) throws ServletException {
+			JasperServletWrapper result) throws ServletException {
 		ServletConfig newConfig = new BundledServletConfig(wabCtx,
 				getJspServletConfig(), wabCtx.getContextPath()
 						+ "_jasper_servlet");

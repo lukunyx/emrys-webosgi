@@ -327,9 +327,9 @@ public class WebComActivator extends ComActivator implements IWebComActivator,
 				webContainer.regServletContext(servletContext);
 				webContainer.activeServletContext(servletContext);
 			}
-		} catch (Exception e) {
+		} catch (Throwable t) {
 			throw new ServiceInitException(new Status(Status.ERROR,
-					getBundleSymbleName(), "Web Service init failed.", e));
+					getBundleSymbleName(), "Web Service init failed.", t));
 		}
 	}
 

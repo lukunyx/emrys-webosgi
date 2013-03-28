@@ -12,7 +12,7 @@ import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.osgi.framework.console.CommandProvider;
 import org.emrys.webosgi.common.ComActivator;
 import org.emrys.webosgi.common.ComponentCore;
-import org.emrys.webosgi.core.classloader.BundledClassLoaderFactory;
+import org.emrys.webosgi.core.classloader.WabClassLoaderFactory;
 import org.emrys.webosgi.core.extension.IEarlyStarter;
 import org.emrys.webosgi.core.internal.FrameworkCoreCmdService;
 import org.emrys.webosgi.core.internal.FwkRuntime;
@@ -122,7 +122,7 @@ public final class FwkActivator extends ComActivator implements IFwkConstants,
 	public void stop(BundleContext context) throws Exception {
 		JspServletPool.destroyAllServlets();
 		StdLogService.stop();
-		BundledClassLoaderFactory.clean();
+		WabClassLoaderFactory.clean();
 		httpServiceTracker.close();
 		httpServiceTracker = null;
 		packageAdminTracker.close();
