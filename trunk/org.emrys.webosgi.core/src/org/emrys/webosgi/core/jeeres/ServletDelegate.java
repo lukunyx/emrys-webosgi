@@ -18,7 +18,7 @@ import org.emrys.webosgi.core.FwkActivator;
 import org.emrys.webosgi.core.internal.FwkRuntime;
 import org.emrys.webosgi.core.jeewrappers.BundledHttpServletRequestWrapper;
 import org.emrys.webosgi.core.jsp.JspServletPool;
-import org.emrys.webosgi.core.jsp.OSGIJspServlet;
+import org.emrys.webosgi.core.jsp.JasperServletWrapper;
 import org.emrys.webosgi.core.runtime.BundleContextRunnable;
 import org.emrys.webosgi.core.service.IWebApplication;
 import org.osgi.framework.Bundle;
@@ -96,7 +96,7 @@ public class ServletDelegate extends AbstMultiInstUrlMapObject implements
 					else {
 						// Process JSP file.
 						Bundle bundle = ctx.getBundle();
-						OSGIJspServlet jspServlet = JspServletPool
+						JasperServletWrapper jspServlet = JspServletPool
 								.getInstance(ctx);
 						BundledHttpServletRequestWrapper wrapper = BundledHttpServletRequestWrapper
 								.getHttpServletRequestWrapper(req, bundle);

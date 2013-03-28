@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.emrys.webosgi.common.util.FileUtil;
 import org.emrys.webosgi.core.FwkActivator;
-import org.emrys.webosgi.core.classloader.BundledClassLoaderFactory;
+import org.emrys.webosgi.core.classloader.WabClassLoaderFactory;
 import org.emrys.webosgi.core.internal.FwkRuntime;
 import org.emrys.webosgi.core.jeeres.FilterDelegate;
 import org.emrys.webosgi.core.jeeres.ListenerInfo;
@@ -639,7 +639,7 @@ public class WabServletContext implements IWABServletContext {
 	}
 
 	public ClassLoader getWabClassLoader() {
-		return BundledClassLoaderFactory.getBundledJeeClassLoader(this);
+		return WabClassLoaderFactory.getWabClassLoader(this);
 	}
 
 	public boolean isJspResource(String path) {

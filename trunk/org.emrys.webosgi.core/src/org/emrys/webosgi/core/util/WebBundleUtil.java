@@ -104,11 +104,11 @@ public class WebBundleUtil extends BundleServiceUtil implements IFwkConstants {
 	 * a zipped file. If extracted resource not exists, the WebContent will be
 	 * extracted to local directory. If the force-update argment true and the
 	 * bundle file last-modify timestamp is newer than the mark in extracted
-	 * resource.
+	 * resource. If not any WebContent directory found, return null.
 	 * 
 	 * @param wabundle
 	 * @param forceUpdate
-	 * @return
+	 * @return Wab's WebContent directory path. If not any, return null.
 	 * @throws IOException
 	 */
 	public static IPath getExtractedWebContentRoot(Bundle wabundle,

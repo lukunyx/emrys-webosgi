@@ -38,7 +38,7 @@ import org.emrys.webosgi.core.internal.FwkRuntime;
 import org.emrys.webosgi.core.jeewrappers.BundledHttpServletRequestWrapper;
 import org.emrys.webosgi.core.jeewrappers.HttpServletResponseWrapper;
 import org.emrys.webosgi.core.jsp.JspServletPool;
-import org.emrys.webosgi.core.jsp.OSGIJspServlet;
+import org.emrys.webosgi.core.jsp.JasperServletWrapper;
 import org.emrys.webosgi.core.resource.ResroucesCom;
 import org.emrys.webosgi.core.resource.WebResComActivator;
 import org.emrys.webosgi.core.resource.extension.BaseResource;
@@ -1191,7 +1191,7 @@ public class ResGetSvcHandler extends AbstractFwkReqeustHandler {
 		 */
 
 		// Get a poolled servlet to process jsp file.
-		OSGIJspServlet jspServlet = JspServletPool.getInstance(webApp
+		JasperServletWrapper jspServlet = JspServletPool.getInstance(webApp
 				.getBundleServletContext());
 		// ClassLoader c = jspServlet.getClass().getClassLoader();
 		// if newResPath is the same, the jasper may not compile the jsp

@@ -5,7 +5,6 @@ import java.io.File;
 import org.emrys.webosgi.core.ServiceInitException;
 import org.osgi.framework.Bundle;
 
-
 /**
  * Web application descriptor for its information and customized behaviors.
  * 
@@ -34,7 +33,8 @@ public interface IWebApplication {
 	String getWebContextPath();
 
 	/**
-	 * Find the web resource content root directory of this wab.
+	 * Find the web resource content root directory of this wab. If not any,
+	 * return null.
 	 * 
 	 * @param forceUpdate
 	 * @return

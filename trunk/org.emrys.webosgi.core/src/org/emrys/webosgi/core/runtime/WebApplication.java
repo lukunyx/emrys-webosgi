@@ -210,9 +210,9 @@ public class WebApplication implements IWebApplication {
 			getWebContainer().activeServletContext(servletContext);
 			initFilters();
 			initOnStartServlet();
-		} catch (Exception e) {
+		} catch (Throwable t) {
 			throw new ServiceInitException(new Status(Status.ERROR, bundle
-					.getSymbolicName(), "Web Service init failed.", e));
+					.getSymbolicName(), "Web Service init failed.", t));
 		}
 	}
 
