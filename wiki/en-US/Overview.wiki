@@ -1,0 +1,16 @@
+#summary Overview of WebOSGi Framework.
+#labels Featured
+
+= WebOSGi Introduction =
+
+WEbOSGi is a Framework for Pluginable JavaEE application, based on OSGi(Equinox) and in compliance with OSGi Enterprise Specification r4.2. Based the bridge-servlet mode recommanded on Equinox website, a web application using this framework can be easyly embeded into any standard JavaEE server, tomcat, weblogic, etc.
+
+According to OSGi Enterprise Spcification r4.2, this framework has implemented a mini JavaEE Web Container as several OSGi bundles, which can parse the web.xml according to the Servlet 2.5 standard(like a embed-tomcat do). This web.xml can be in the WebContent folder in a bundle, and the WebContent's structure is like a common JavaEE war, which can have Java servlet, listeners, filters,  jsp, image, css, etc. It is say, using this framework, you can simplely deploy a JavaEE .war to WebOSGi runtime, the .war(now a OSGi wab bundle jar) can run as JavaEE Application in the OSGi runtime and take many benefits of OSGi.
+
+What's more, the popular JavaEE middle-ware, like JPA, Hibernate, Spring, Struts can be easyly wrapped into a bundle, or just in the lib folder of the wab bundle with $WebContent$/WEB-INF/web.xml file in the web bundle. 
+
+If you are formaliar with the OSGi and equinox extension point, you can design your customized extension points, and implement different Services on the OSGi service bus.  It's say, you can construct a pluginable UI framework, not only back-end a pluginable service bus. You maybe have use the famous JIRA, and shocked by its powerful plugins architecrue, this framework just provide a opensource solution for this need. If you are a JavaEE developer, you will like this framework, for it doesn't change your skill, just wrap your JavaEE as wab bundle by a little essential modification in the MANIFEST.MF file. And you are not forced to master OSGi at all.
+
+WebOSGi will take you into a new simple world.
+
+Try it, and enjoy it. 
