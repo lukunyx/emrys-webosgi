@@ -386,12 +386,17 @@ public class BundledHttpServletRequestWrapper implements HttpServletRequest,
 	 * @see javax.servlet.http.HttpServletRequest#getServletPath()
 	 */
 	public String getServletPath() {
+		// tomcat return empty "" string, but IBM domino return null when no
+		// servlet path. Do return "" in this case.
 		if (servletPathSetted)
 			return servletPath == null ? "" : servletPath;
+
 		if (httpServletRequest != null)
-			return httpServletRequest.getServletPath();
+			servletPath = httpServletRequest.getServletPath();
 		else
-			return httpServletRequestAdatper.getServletPath();
+			servletPath = httpServletRequestAdatper.getServletPath();
+
+		return servletPath == null ? "" : servletPath;
 	}
 
 	/**
