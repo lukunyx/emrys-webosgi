@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Emrys OSGi Web Container[JavaEE2.5]
 Bundle-SymbolicName: org.emrys.webosgi.core;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.emrys.webosgi.core.FwkActivator
 Bundle-Vendor: EMRYS
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

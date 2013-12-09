@@ -460,7 +460,7 @@ public class WebComActivator extends ComActivator implements IWebComActivator,
 
 			initOthers(doc);
 		} catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			throw new ServiceInitException(new Status(Status.ERROR, this
 					.getBundleSymbleName(),
 					"Initialize Web.xml configre failed["
