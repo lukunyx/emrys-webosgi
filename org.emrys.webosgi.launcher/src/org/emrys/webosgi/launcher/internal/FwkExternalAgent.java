@@ -3,11 +3,11 @@
  */
 package org.emrys.webosgi.launcher.internal;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.emrys.webosgi.launcher.internal.adapter.ServletContextAdapter;
-
 
 /**
  * @author LeoChang
@@ -63,5 +63,16 @@ public final class FwkExternalAgent implements IFwkEnvConstants {
 			fwkEnvAttrs.remove(name);
 		if (name != null)
 			fwkEnvAttrs.put(name, value);
+	}
+
+	public String getOSGiSysConfigProperty(String name) throws Exception {
+		Object sysBundleCtx = OSGiFwkLauncher.sysBundleCtx;
+		if (sysBundleCtx == null)
+			throw new IllegalStateException(
+					"No system bundle context found. OSGi framework not launched.");
+
+		Method runMethod = sysBundleCtx.getClass().getMethod("getProperty",
+				new Class[] { String.class });
+		return (String) runMethod.invoke(sysBundleCtx, new Object[] { name });
 	}
 }

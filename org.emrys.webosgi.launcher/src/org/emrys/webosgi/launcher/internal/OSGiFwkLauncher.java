@@ -139,6 +139,8 @@ public class OSGiFwkLauncher implements IFwkEnvConstants {
 		return osgiEmbedded;
 	}
 
+	public static Object sysBundleCtx;
+
 	protected ServletConfig config;
 	protected ServletContext context;
 	protected String resourceBase;
@@ -414,10 +416,11 @@ public class OSGiFwkLauncher implements IFwkEnvConstants {
 
 			Method runMethod = clazz.getMethod(
 					"startup", new Class[] { String[].class, Runnable.class }); //$NON-NLS-1$
-			runMethod.invoke(null, new Object[] { args, null });
+			sysBundleCtx = runMethod.invoke(null, new Object[] { args, null });
 
 			frameworkContextClassLoader = Thread.currentThread()
 					.getContextClassLoader();
+			// Reture OSGi bundle context with bundle id 0L.
 		} catch (InvocationTargetException ite) {
 			Throwable t = ite.getTargetException();
 			if (t == null)

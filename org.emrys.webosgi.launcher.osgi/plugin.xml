@@ -13,4 +13,11 @@
            </init-param>
         </servlet>
     </extension>
+    <extension
+         point="com.ibm.commons.Extension">
+      <service
+            class="org.emrys.webosgi.launcher.osgi.XspSvcEmptyFactory"
+            type="com.ibm.xsp.adapter.serviceFactory">
+      </service>
+   </extension>
 </plugin>
