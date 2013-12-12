@@ -8,7 +8,6 @@ import org.emrys.webosgi.launcher.internal.FwkExternalAgent;
 import org.emrys.webosgi.launcher.internal.IFwkLauncher;
 import org.emrys.webosgi.launcher.internal.adapter.ServletContextAdapter;
 
-
 /**
  * Bridge Servlet to launcher OSGi Java EE Framework embedded in OSGi runtime.
  * 
@@ -24,9 +23,9 @@ public class BridgeHttpServlet extends DefaultBridgeHttpServlet {
 	 * recognize this servlet and not register this servlet again.
 	 */
 	public static final String SERVLET_NAME = "EmbeddedBridgeServlet";
-
+	public static final String BRIDGE_SERVLET_MAP_PATH = "/p";
 	private static final long serialVersionUID = -8563761086306691762L;
-	private static final String BRIDGE_SERVLET_MAP_NAME = "p";
+
 	private IFwkLauncher fwkLauncher;
 
 	@Override
@@ -40,10 +39,10 @@ public class BridgeHttpServlet extends DefaultBridgeHttpServlet {
 				.getFwkServletContext(FwkExternalAgent.SERVLET_TYPE_HTTP);
 		String originalCtxPath = fwkServletCtx.getContextPath();
 		if (originalCtxPath != null && originalCtxPath.length() > 0) {
-			fwkServletCtx.setContextPath(originalCtxPath + "/"
-					+ BRIDGE_SERVLET_MAP_NAME);
+			fwkServletCtx.setContextPath(originalCtxPath
+					+ BRIDGE_SERVLET_MAP_PATH);
 		} else
-			fwkServletCtx.setContextPath("/" + BRIDGE_SERVLET_MAP_NAME);
+			fwkServletCtx.setContextPath(BRIDGE_SERVLET_MAP_PATH);
 	}
 
 	@Override
@@ -62,6 +61,6 @@ public class BridgeHttpServlet extends DefaultBridgeHttpServlet {
 	@Override
 	protected String getSpecifiedContextPath() {
 		// Specify the framework servlet context path.
-		return "/" + BRIDGE_SERVLET_MAP_NAME;
+		return BRIDGE_SERVLET_MAP_PATH;
 	}
 }
