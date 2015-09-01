@@ -1,9 +1,9 @@
 # emrys-webosgi
 Automatically exported from code.google.com/p/emrys-webosgi
-WebOSGi介绍
+# WebOSGi介绍
 WebOSGi是一种将OSGi插件化架构应用与JavaEE应用的解决方案，由Emrys开源软件社区负责开发维护。该方案基于OSGi的Equinox开源项目，以OSGi 插件的方式，实现了一个轻量级的JavaEE Web Container框架，使得以OSGi插件化方式开发大型JavaEE应用变为可能。该框架完全遵循OSGi Enterprise Specification r4.2规范文档中第128章关于Web Container的定义，同时又提供了若干实用、方便的个性化、扩展接口。
 
-WebOSGi方案给开发者带来如下好处：
+# WebOSGi方案给开发者带来如下好处：
 将现有的JavaEE应用，不加修改的迁移和部署到WebOSGi环境中 该方式仅仅类似将JavaEE应用包部署到一个底层采用OSGi架构的JavaEE服务器上，而且没有从OSGi得到任何的好处，所以不建议采用此方式。
 对现有JavaEE应用，以OSGi插件开发方式，进行稍微的插件拆分、改造，然后部署到WebOSGi中 如果开发者原有的JavaEE应用，虽然采用了Spring等流行的中间件，功能代码耦合比较严重，协同开发、部署、产品升级、jars版本依赖管理难度大，那么我们推荐使用WebOSGi架构，将该项目划分为若干个松耦合的OSGi插件，进行相应的架构设计。
 开发新项目时，就采用OSGi插件化的设计思想，将大型的、需求繁杂多变的JavaEE项目，按照功能更耦合依赖关系，划分为若干个不同层次的OSGi 插件项目进行开发，最终部署到WebOSGi环境中。
@@ -38,16 +38,3 @@ WebOSGi项目开发计划
 2013.12.1 发布1.4版本
 增加Web Console，提供在线更新、安装Wab应用和管理服务器
 增加基本的管理、配置界面
-WebOSGi Introduction
-WEbOSGi is a Framework for Pluginable JavaEE application, based on OSGi(Equinox) and in compliance with OSGi Enterprise Specification r4.2. Based the bridge-servlet mode recommanded on Equinox website, a web application using this framework can be easyly embeded into any standard JavaEE server, tomcat, weblogic, etc.
-
-According to OSGi Enterprise Spcification r4.2, this framework has implemented a mini JavaEE Web Container as several OSGi bundles, which can parse the web.xml according to the Servlet 2.5 standard(like a embed-tomcat do). This web.xml can be in the WebContent folder in a bundle, and the WebContent's structure is like a common JavaEE war, which can have Java servlet, listeners, filters, jsp, image, css, etc. It is say, using this framework, you can simplely deploy a JavaEE .war to WebOSGi runtime, the .war(now a OSGi wab bundle jar) can run as JavaEE Application in the OSGi runtime and take many benefits of OSGi.
-
-What's more, the popular JavaEE middle-ware, like JPA, Hibernate, Spring, Struts can be easyly wrapped into a bundle, or just in the lib folder of the wab bundle with $WebContent$/WEB-INF/web.xml file in the web bundle.
-
-If you are formaliar with the OSGi and equinox extension point, you can design your customized extension points, and implement different Services on the OSGi service bus. It's say, you can construct a pluginable UI framework, not only back-end a pluginable service bus. You maybe have use the famous JIRA, and shocked by its powerful plugins architecrue, this framework just provide a opensource solution for this need. If you are a JavaEE developer, you will like this framework, for it doesn't change your skill, just wrap your JavaEE as wab bundle by a little essential modification in the MANIFEST.MF file. And you are not forced to master OSGi at all.
-
-WebOSGi will take you into a new simple world.
-
-Try it, and enjoy it.
-
